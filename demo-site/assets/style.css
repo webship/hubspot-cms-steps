@@ -1,0 +1,88 @@
+:root {
+  --hs-orange: #ff7a59;
+  --hs-navy: #33475b;
+  --hs-grey: #eaf0f6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--hs-navy);
+  line-height: 1.5;
+}
+
+a { color: var(--hs-orange); }
+
+.header-container-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--hs-grey);
+}
+
+.hs-menu-wrapper ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hs-menu-wrapper a {
+  text-decoration: none;
+  color: var(--hs-navy);
+  font-weight: 600;
+}
+
+.hero {
+  padding: 64px 32px;
+  background: var(--hs-grey);
+  text-align: center;
+}
+
+.cta_button {
+  display: inline-block;
+  background: var(--hs-orange);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+main { padding: 32px; max-width: 960px; margin: 0 auto; }
+
+.pricing-tiers { display: flex; gap: 24px; flex-wrap: wrap; }
+.pricing-tier { flex: 1; min-width: 220px; border: 1px solid var(--hs-grey); border-radius: 8px; padding: 24px; }
+
+.hs-blog-post-listing { display: flex; flex-direction: column; gap: 24px; }
+.hs-blog-post { border-bottom: 1px solid var(--hs-grey); padding-bottom: 16px; }
+
+.hs-form-field { margin-bottom: 16px; }
+.hs-form-field label { display: block; font-weight: 600; margin-bottom: 4px; }
+.hs-input { width: 100%; padding: 10px; border: 1px solid #c4c9d3; border-radius: 4px; }
+.submitted-message { padding: 24px; background: #e5f8ee; border: 1px solid #37b26c; border-radius: 8px; }
+.submitted-message[hidden] { display: none; }
+
+#hs-eu-cookie-confirmation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--hs-navy);
+  color: #fff;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+#hs-eu-cookie-confirmation[hidden] { display: none; }
+
+.hs-footer { padding: 32px; text-align: center; color: #6c7a8b; font-size: 14px; }
