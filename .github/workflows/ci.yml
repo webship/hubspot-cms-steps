@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: ['2.0.x']
+  pull_request:
+    branches: ['2.0.x']
+
+env:
+  FORCE_COLOR: 1
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Install DDEV
+        uses: ddev/github-action-setup-ddev@v1
+
+      - name: Build the demo site with DDEV
+        run: ddev start
+
+      - name: Run webship-js tests against the DDEV site
+        run: |
+          LAUNCH_URL="$(ddev describe -j | jq -r '.raw.primary_url')"
+          LAUNCH_URL="$LAUNCH_URL" npm test
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: |
+            tests/reports/
+            screenshots/
