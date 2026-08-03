@@ -4,10 +4,36 @@ A standalone [webship-js](https://webship.co/docs/webship-js/2.0.x) (Playwright 
 test project for websites built on the HubSpot CMS: the cookie consent banner, HubSpot forms,
 CTA modules, the menu module, and the blog listing module — all in plain-English Gherkin.
 
-This is not an npm package to install elsewhere — it's a project you run directly (or fork)
-to test a HubSpot CMS site. It ships a self-contained demo HubSpot-style site (`demo-site/`)
+It is published to npm as `@webship-js/hubspot-cms-steps`, and is also a project you can run
+directly (or fork) to test a HubSpot CMS site. It ships a self-contained demo HubSpot-style site (`demo-site/`)
 and a full suite of `.feature` files, so the suite can be verified in CI without a real
 HubSpot account.
+
+## Installation
+
+To reuse these steps in your own webship-js project:
+
+```bash
+npm install --save-dev webship-js @webship-js/hubspot-cms-steps
+```
+
+Add both step-definition paths to your project's `cucumber.js`:
+
+```javascript
+module.exports = {
+  default: {
+    require: [
+      'node_modules/webship-js/tests/step-definitions/**/*.js', // webship-js core steps
+      'node_modules/@webship-js/hubspot-cms-steps/tests/step-definitions/hubspot.steps.js', // this plugin
+      'tests/step-definitions/**/*.js', // your own custom steps, if any
+    ],
+    paths: ['tests/features/**/*.feature'],
+    worldParameters: {
+      launchUrl: process.env.LAUNCH_URL || 'https://your-hubspot-site.example',
+    },
+  },
+};
+```
 
 ## Repository layout
 

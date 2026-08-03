@@ -4,3 +4,4 @@ screenshots/
 videos/
 *.log
 .DS_Store
+package-lock.json
