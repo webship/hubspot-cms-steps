@@ -1,0 +1,56 @@
+{
+  "name": "@webship-js/hubspot-cms-steps",
+  "version": "2.0.0-alpha1",
+  "description": "webship-js test project for HubSpot CMS websites: HubSpot forms, CTAs, cookie banner, menu, and blog listings.",
+  "main": "tests/step-definitions/hubspot.steps.js",
+  "files": [
+    "tests/step-definitions/hubspot.steps.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "http-server demo-site -p 8090 -s",
+    "test": "cucumber-js --config cucumber.js",
+    "test:chromium": "BROWSER=chromium cucumber-js --config cucumber.js",
+    "test:firefox": "BROWSER=firefox cucumber-js --config cucumber.js",
+    "test:webkit": "BROWSER=webkit cucumber-js --config cucumber.js",
+    "test:headed": "HEADLESS=false cucumber-js --config cucumber.js",
+    "generate-reports": "generate-reports"
+  },
+  "keywords": [
+    "webship-js",
+    "hubspot",
+    "cucumber",
+    "playwright",
+    "bdd",
+    "step-definitions",
+    "testing"
+  ],
+  "author": "Webship.co",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webship/hubspot-cms-steps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webship/hubspot-cms-steps/issues"
+  },
+  "homepage": "https://github.com/webship/hubspot-cms-steps#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 20.0"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "tsx": "^4.19.2",
+    "webship-js": "^2.0.6"
+  },
+  "peerDependencies": {
+    "webship-js": "^2.0.6"
+  },
+  "overrides": {
+    "@cucumber/cucumber": "^12"
+  }
+}
