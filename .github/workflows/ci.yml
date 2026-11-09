@@ -31,6 +31,9 @@ jobs:
       - name: Build the demo site with DDEV
         run: ddev start
 
+      - name: Check the JSDoc examples and feature steps against the step regexes
+        run: npm run test:examples
+
       - name: Run webship-js tests against the DDEV site
         run: |
           LAUNCH_URL="$(ddev describe -j | jq -r '.raw.primary_url')"

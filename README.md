@@ -63,6 +63,39 @@ npm start &                         # serves demo-site/ on http://localhost:8090
 npm test
 ```
 
+## Steps
+
+| Step | Type |
+| --- | --- |
+| `the page should( not) be a HubSpot page` | Then |
+| `I accept the (HubSpot )cookie banner` / `I decline the (HubSpot )cookie banner` | When |
+| `the (HubSpot )cookie banner should( not) be visible` / `I should( not) see the cookie banner` | Then |
+| `I fill in the (HubSpot )form field "<name>" with "<value>"` | When |
+| `I submit the (HubSpot )form` | When |
+| `the (HubSpot )form should( not) show a success message( containing "<text>")` | Then |
+| `I click the (HubSpot )CTA "<label>"` | When |
+| `the (HubSpot )CTA "<label>" should( not) link to "<href>"` | Then |
+| `the (HubSpot )menu should( not) have a link labeled "<label>"` | Then |
+| `the (HubSpot )blog should list at least <n> post(s)` | Then |
+| `I open the (HubSpot )blog post titled "<title>"` | When |
+
+The product word is optional ("the HubSpot cookie banner" and "the cookie
+banner" both match), so a feature written for another pack reads here too.
+Every Then step takes `should` or `should not`, every action takes `I`, `we`
+or no pronoun and is registered as a `When`, and every failure is a friendly
+message with a hint (no assertion or Playwright stack). Each assertion polls
+its condition for the `minWaitTime.page` budget (at least 10 s) instead of
+reading the page once, and the form submit and CTA click settle the page
+before the next step. The reference features assert the demo site's own
+copy, labels and paths (`/pricing.html`, "Acme Analytics", ...); swap them
+for your site's content when you copy a feature.
+
+Every step's regex and five Gherkin examples are in the JSDoc block above it
+in [`tests/step-definitions/hubspot.steps.js`](tests/step-definitions/hubspot.steps.js);
+`npm run test:examples` checks that each example matches its own step (and no
+webship-js core step) and that every feature step is defined exactly once.
+CI runs it before the suite.
+
 ## Writing a scenario
 
 ```gherkin
@@ -70,10 +103,10 @@ Feature: Contact page
 
   Scenario: Visitor submits the contact form
     Given I am on "/contact-us.html"
-    And I accept the HubSpot cookie banner
-    When I fill in the HubSpot form field "email" with "jane@example.com"
-    And I submit the HubSpot form
-    Then the HubSpot form should show a success message
+    When I accept the cookie banner
+    And I fill in the form field "email" with "jane@example.com"
+    And I submit the form
+    Then the form should show a success message
 ```
 
 ## Contributing

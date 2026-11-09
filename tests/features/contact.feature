@@ -1,3 +1,5 @@
+# The copy, labels and paths below are those of the demo site in demo-site/; swap
+# them for your own content when you copy this feature.
 Feature: Contact Us page
   As a prospective customer
   I want to submit the contact form
