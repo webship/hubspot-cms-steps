@@ -1,3 +1,5 @@
+# The copy, labels and paths below are those of the demo site in demo-site/; swap
+# them for your own content when you copy this feature.
 Feature: Blog
   As a visitor
   I want to read the company blog
