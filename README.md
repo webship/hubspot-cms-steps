@@ -84,8 +84,14 @@ npm test
 | `the (HubSpot )form should( not) show an error( containing "<text>")` | Then |
 | `the (HubSpot )form should( not) show a success message( containing "<text>")` | Then |
 | `I click the (HubSpot )CTA "<label>"` | When |
+| `the (HubSpot )CTA "<label>" should( not) be visible` | Then |
 | `the (HubSpot )CTA "<label>" should( not) link to "<href>"` | Then |
 | `the (HubSpot )menu should( not) have a link labeled "<label>"` | Then |
+| `the (HubSpot )menu link "<label>" should( not) link to "<href>"` | Then |
+| `the (HubSpot )menu item "<label>" should( not) have a submenu link "<label>"` | Then |
+| `I open the (HubSpot )menu item "<label>"` | When |
+| `I click the (HubSpot )menu link "<label>"` | When |
+| `the (HubSpot )menu link "<label>" should( not) be active` | Then |
 | `the (HubSpot )blog should list at least <n> post(s)` | Then |
 | `I open the (HubSpot )blog post titled "<title>"` | When |
 
@@ -117,6 +123,21 @@ new forms editor, an iframe that HubSpot's embed script creates inside a
 a page has several forms, the form of the last field you filled is the one that is
 submitted and checked. A form set to redirect leaves the page after the submit; assert
 the new address with `I should be on "/thank-you"`.
+
+## Menus and CTAs
+
+The menu is looked up in `.hs-menu-wrapper` (HubSpot's menu module), `nav` and
+`[role="navigation"]` (theme menus); a page usually carries the menu twice, one copy
+hidden for the other screen size, so the steps that click use the visible copy. A
+submenu link is the `ul` inside a menu item (`li.hs-item-has-children`); opening an item
+hovers over it, then clicks it when the submenu is still closed. The current page is
+`li.active`, or `aria-current="page"` in a theme menu.
+
+A CTA is found by its text, its `title`, its `aria-label` or the `alt` of its image (an
+image CTA has no text), in `.hs-cta-wrapper`, `.hs-cta-embed` or as `a.cta_button`. The
+`href` of a CTA is HubSpot's tracking redirect (`/cs/c/?cta_guid=...`), so its
+destination is read from the `cta_dest_link` attribute; "should link to" takes a path
+(`/pricing`, the same site) or a full address.
 
 ## Checking a real site
 
