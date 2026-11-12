@@ -14,39 +14,18 @@
 
 const { When, Then } = require('@cucumber/cucumber');
 const { friendly, smartSettle } = require('webship-js/tests/step-definitions/webship');
+const { budget, literal, actOrExplain } = require('./hubspot-helpers');
+
+// Form steps live in their own file.
+require('./hubspot-forms.steps');
 
 const COOKIE_BANNER = '#hs-eu-cookie-confirmation';
 const COOKIE_ACCEPT = '#hs-eu-confirmation-button';
 const COOKIE_DECLINE = '#hs-eu-decline-button';
-const FORM_FRAME = '.hs-form-frame';
-const SUCCESS_MESSAGE = '.hs-form-frame .submitted-message';
 const CTA_BUTTON = '.hs-cta-wrapper .cta_button';
 
 const COOKIE_HINT = 'The HubSpot cookie banner is `#hs-eu-cookie-confirmation` with `#hs-eu-confirmation-button` / `#hs-eu-decline-button`; it only shows when cookie consent is enabled for the visitor\'s region and has not been answered yet.';
-const FORM_HINT = 'HubSpot forms render inside `.hs-form-frame` with fields named after their internal property names (`email`, `firstname`, ...); the form must have finished loading.';
 const CTA_HINT = 'CTA modules render as `.hs-cta-wrapper .cta_button` and are matched by their visible label; check the wording and that the CTA is published.';
-
-/** The per-assertion wait budget: `minWaitTime.page` from cucumber.js, else 10 s. */
-function budget(world) {
-  return Math.max((world.minWaitTime && world.minWaitTime.page) || 0, 10000);
-}
-
-/** Escape a literal string for use inside a RegExp (case-sensitive text match). */
-function literal(text) {
-  return new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-}
-
-/**
- * Run a locator action and rethrow as a friendly error (action, target,
- * cause and a hint) instead of Playwright's raw timeout stack.
- */
-async function actOrExplain(label, target, fn, hint) {
-  try {
-    return await fn();
-  } catch (err) {
-    throw friendly({ action: label, target, cause: err, hint });
-  }
-}
 
 /**
  * Wait until `locator` has (or, with `notCase`, has no) visible match, then
@@ -147,73 +126,6 @@ Then(/^(?:(?:the )?(?:HubSpot )?cookie banner should( not)* be visible|(?:I |we 
     hint: COOKIE_HINT,
     timeout: budget(this),
   });
-});
-
-/**
- * Fill a field, located by its name attribute, inside the page's HubSpot
- * form.
- *
- * Example #1: When I fill in the HubSpot form field "email" with "jane@example.com"
- * Example #2: When I fill in the HubSpot form field "firstname" with "Jane"
- * Example #3: And I fill in the form field "lastname" with "Doe"
- * Example #4: And fill in the HubSpot form field "message" with "Please call me back"
- * Example #5: When we fill in the form field "email" with "test@acme.com"
- *
- */
-When(/^(I |we )*fill in the (?:HubSpot )?form field "([^"]*)?" with "([^"]*)?"$/, async function (pronounCase, field, value) {
-  const locator = this.page.locator(`${FORM_FRAME} [name="${field}"]`).first();
-  await actOrExplain('fill in the form field', field, async () => {
-    await locator.waitFor({ state: 'visible', timeout: budget(this) });
-    await locator.fill(value);
-  }, FORM_HINT);
-});
-
-/**
- * Submit the page's HubSpot form and wait for the page to settle, so the
- * AJAX response has a chance to replace the form with its message.
- *
- * Example #1: When I submit the HubSpot form
- * Example #2: And I submit the HubSpot form
- * Example #3: When we submit the form
- * Example #4: And submit the HubSpot form
- * Example #5: When I submit the form
- *
- */
-When(/^(I |we )*submit the (?:HubSpot )?form$/, async function (pronounCase) {
-  const submit = this.page.locator(`${FORM_FRAME} [type="submit"]`).first();
-  await actOrExplain('submit the form', FORM_FRAME, async () => {
-    await submit.waitFor({ state: 'visible', timeout: budget(this) });
-    await submit.click();
-  }, FORM_HINT + ' The submit button is the form\'s `[type="submit"]`.');
-  await smartSettle(this.page, (this.minWaitTime && this.minWaitTime.page) || 3000);
-});
-
-/**
- * Assert the HubSpot form's success ("thank you") message is (or is not)
- * visible, optionally containing the given text.
- *
- * Example #1: Then the HubSpot form should show a success message
- * Example #2: Then the HubSpot form should show a success message containing "Thanks"
- * Example #3: And the form should show a success message containing "received your message"
- * Example #4: But the HubSpot form should not show a success message
- * Example #5: Then the form should not show a success message containing "error"
- *
- */
-Then(/^(?:the )?(?:HubSpot )?form should( not)* show a success message(?: containing "([^"]*)?")?$/, async function (notCase, text) {
-  let message = this.page.locator(SUCCESS_MESSAGE);
-  if (text) message = message.filter({ hasText: literal(text) });
-  const timeout = budget(this);
-  try {
-    await message.first().waitFor({ state: notCase ? 'hidden' : 'visible', timeout });
-  } catch {
-    const content = (await this.page.locator(SUCCESS_MESSAGE).first().textContent().catch(() => null) || '').trim();
-    throw friendly({
-      message: notCase
-        ? `Expected the form not to show a success message${text ? ` containing "${text}"` : ''}, but it does ("${content}").`
-        : `Expected the form to show a success message${text ? ` containing "${text}"` : ''} within ${timeout} ms${content ? `, found: "${content}"` : ', but none appeared'}.`,
-      hint: 'HubSpot replaces the form with `.submitted-message` after a successful AJAX submit; submit the form first and check the form\'s thank-you text (the match is case-sensitive).',
-    });
-  }
 });
 
 /**

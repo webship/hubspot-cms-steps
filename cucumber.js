@@ -9,8 +9,8 @@ module.exports = {
     ],
     // FEATURES=tests/features/a.feature,tests/features/b.feature runs a subset.
     paths: process.env.FEATURES ? process.env.FEATURES.split(',') : ['tests/features/**/*.feature'],
-    // CUCUMBER_TAGS=@critical runs a lane; the default keeps work-in-progress and auth-state setup out.
-    tags: process.env.CUCUMBER_TAGS || 'not @wip and not @auth-setup',
+    // CUCUMBER_TAGS=@critical runs a lane; the default keeps work-in-progress, auth-state setup and the read-only real-site checks (@real-site) out.
+    tags: process.env.CUCUMBER_TAGS || 'not @wip and not @auth-setup and not @real-site',
     format: [
       '@cucumber/pretty-formatter',
       'json:tests/reports/cucumber_report.json',

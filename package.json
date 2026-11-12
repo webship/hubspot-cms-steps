@@ -4,7 +4,8 @@
   "description": "webship-js test project for HubSpot CMS websites: HubSpot forms, CTAs, cookie banner, menu, and blog listings.",
   "main": "tests/step-definitions/hubspot.steps.js",
   "files": [
-    "tests/step-definitions/hubspot.steps.js",
+    "tests/step-definitions/*.js",
+    "scripts/probe-selectors.js",
     "README.md",
     "LICENSE"
   ],
@@ -16,6 +17,8 @@
     "test:webkit": "BROWSER=webkit cucumber-js --config cucumber.js",
     "test:headed": "HEADLESS=false cucumber-js --config cucumber.js",
     "test:examples": "node scripts/check-examples.js",
+    "test:real-sites": "node scripts/run-real-sites.js",
+    "probe": "node scripts/probe-selectors.js",
     "generate-reports": "generate-reports"
   },
   "keywords": [
