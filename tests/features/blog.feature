@@ -15,9 +15,9 @@ Feature: Blog
     And the blog should list at least 3 posts
 
   Scenario: Opening a blog post navigates to the full article
-    When I open the blog post titled "Testing forms without sending them"
+    When I open the blog post titled "Testing HubSpot forms without sending them"
     Then the page should be a blog post page
-    And I should see "Testing forms without sending them"
+    And I should see "Testing HubSpot forms without sending them"
     And the blog post should be written by "Jane Doe"
     And the blog post should be tagged "Testing"
     And the blog post should not be tagged "Marketing"
