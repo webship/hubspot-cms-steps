@@ -21,4 +21,4 @@ Feature: About Us page
     And the HubSpot CTA "Download the guide" should link to "/blog/hubspot-cms-tips.html"
 
   Scenario: The new CTA embed is found as well
-    Then the HubSpot CTA "Read the blog" should link to "/blog/index.html"
+    Then the HubSpot CTA "Read the blog" should link to "/blog/"

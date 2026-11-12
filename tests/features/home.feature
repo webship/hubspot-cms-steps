@@ -31,7 +31,7 @@ Feature: Home page
     And the HubSpot menu item "Resources" should not have a submenu link "Pricing"
     When I open the HubSpot menu item "Resources"
     And I click the HubSpot menu link "Blog"
-    Then I should be on "/blog/index.html"
+    Then I should be on "/blog/"
 
   Scenario: A menu link is followed
     When I click the HubSpot menu link "Pricing"

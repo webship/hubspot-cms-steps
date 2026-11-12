@@ -7,7 +7,7 @@
   <title>Acme Analytics | Blog</title>
   <link rel="stylesheet" href="/assets/style.css">
 </head>
-<body>
+<body class="hs-blog-listing hs-content-path-blog ">
   <header class="header-container-wrapper">
     <a href="/index.html"><strong>Acme Analytics</strong></a>
     <span id="hs_cos_wrapper_header_menu" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_menu" data-hs-cos-general-type="widget" data-hs-cos-type="menu">
@@ -18,7 +18,7 @@
           <li class="hs-menu-item hs-menu-depth-1" role="none"><a href="/about-us.html" role="menuitem">About</a></li>
           <li class="hs-menu-item hs-menu-depth-1 hs-item-has-children active-branch" role="none"><a href="javascript:;" aria-haspopup="true" aria-expanded="false" role="menuitem">Resources</a>
           <ul role="menu" class="hs-menu-children-wrapper">
-            <li class="hs-menu-item hs-menu-depth-2 active active-branch" role="none"><a href="/blog/index.html" role="menuitem">Blog</a></li>
+            <li class="hs-menu-item hs-menu-depth-2 active active-branch" role="none"><a href="/blog/" role="menuitem">Blog</a></li>
             <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="/blog/hubspot-cms-tips.html" role="menuitem">5 tips for testing a HubSpot CMS site</a></li>
           </ul></li>
           <li class="hs-menu-item hs-menu-depth-1" role="none"><a href="/contact-us.html" role="menuitem">Contact</a></li>
@@ -33,42 +33,67 @@
           <li class="hs-menu-item hs-menu-depth-1" role="none"><a href="/about-us.html" role="menuitem">About</a></li>
           <li class="hs-menu-item hs-menu-depth-1 hs-item-has-children active-branch" role="none"><a href="javascript:;" aria-haspopup="true" aria-expanded="false" role="menuitem">Resources</a>
           <ul role="menu" class="hs-menu-children-wrapper">
-            <li class="hs-menu-item hs-menu-depth-2 active active-branch" role="none"><a href="/blog/index.html" role="menuitem">Blog</a></li>
+            <li class="hs-menu-item hs-menu-depth-2 active active-branch" role="none"><a href="/blog/" role="menuitem">Blog</a></li>
             <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="/blog/hubspot-cms-tips.html" role="menuitem">5 tips for testing a HubSpot CMS site</a></li>
           </ul></li>
           <li class="hs-menu-item hs-menu-depth-1" role="none"><a href="/contact-us.html" role="menuitem">Contact</a></li>
         </ul>
       </div>
     </span>
+    <div class="hs-search-field search-field cms-content hs-search-field--initialized">
+      <div class="hs-search-field__bar">
+        <form class="hs-search-field__form" action="/hs-search-results">
+          <input role="combobox" aria-expanded="false" aria-label="Search" type="search" class="hs-search-field__input" id="search_bar-input" name="q" autocomplete="off" aria-autocomplete="list" placeholder="Search">
+          <input type="hidden" name="type" value="SITE_PAGE">
+          <input type="hidden" name="type" value="BLOG_POST">
+          <button class="hs-search-field__button" aria-label="Search"><span>Search</span></button>
+        </form>
+      </div>
+    </div>
   </header>
 
-  <main>
+  <main class="blog-index">
     <h1>Blog</h1>
-    <div class="hs-blog-post-listing">
-      <article class="hs-blog-post">
-        <h2><a href="/blog/why-bdd-testing-matters.html">Why BDD testing matters for marketing sites</a></h2>
-        <p>Gherkin scenarios keep your landing pages honest as they change.</p>
+    <div class="blog-listing">
+      <article class="blog-item">
+        <h2><a class="blog-item__link" href="/blog/multilingual-hubspot-sites.html">Testing a multilingual HubSpot site</a></h2>
+        <p>Language switchers and translated pages need their own scenarios.</p>
+        <div class="post-date"><time datetime="2026-10-28">2026-10-28</time> by <a href="/blog/author/john-roe/">John Roe</a></div>
+        <ul class="post-tags"><li><a href="/blog/tag/hubspot/">HubSpot</a></li></ul>
       </article>
-      <article class="hs-blog-post">
-        <h2><a href="/blog/hubspot-cms-tips.html">5 tips for testing a HubSpot CMS site</a></h2>
-        <p>Forms, CTAs, and cookie banners each need their own testing strategy.</p>
+      <article class="blog-item">
+        <h2><a class="blog-item__link" href="/blog/testing-hubspot-forms.html">Testing HubSpot forms without sending them</a></h2>
+        <p>Validation errors can be tested without sending a single submission.</p>
+        <div class="post-date"><time datetime="2026-10-21">2026-10-21</time> by <a href="/blog/author/jane-doe/">Jane Doe</a></div>
+        <ul class="post-tags"><li><a href="/blog/tag/hubspot/">HubSpot</a></li><li><a href="/blog/tag/testing/">Testing</a></li></ul>
       </article>
-      <article class="hs-blog-post">
-        <h2><a href="/blog/automating-website-qa.html">Automating website QA with webship-js</a></h2>
+      <article class="blog-item">
+        <h2><a class="blog-item__link" href="/blog/automating-website-qa.html">Automating website QA with webship-js</a></h2>
         <p>How we replaced manual click-throughs with Cucumber scenarios.</p>
+        <div class="post-date"><time datetime="2026-10-14">2026-10-14</time> by <a href="/blog/author/john-roe/">John Roe</a></div>
+        <ul class="post-tags"><li><a href="/blog/tag/testing/">Testing</a></li><li><a href="/blog/tag/automation/">Automation</a></li></ul>
       </article>
     </div>
+      <ul class="pagination"><li><a href="/blog/">1</a></li><li><a href="/blog/page/2/">2</a></li><li><a href="/blog/page/2/">Next Page →</a></li></ul>
   </main>
 
   <footer class="hs-footer">
     <p>&copy; 2026 Acme Analytics. Built on HubSpot CMS (demo site).</p>
   </footer>
 
-  <div id="hs-eu-cookie-confirmation" class="hs-cookie-notification-position-bottom">
-    <p id="hs-eu-cookie-confirmation-inner">We use cookies to make our site work better. <a href="/legal/privacy-policy.html">Privacy policy</a></p>
-    <div>
-      <button id="hs-eu-decline-button" type="button">Decline</button>
-      <button id="hs-eu-confirmation-button" type="button">Accept cookies</button>
+  <div id="hs-banner-parent">
+    <div id="hs-eu-cookie-confirmation" class="hs-cookie-notification-position-bottom" role="dialog" aria-describedby="hs-eu-policy-wording" aria-label="Cookie banner" tabindex="-1">
+      <div id="hs-eu-cookie-confirmation-inner">
+        <div id="hs-eu-policy-wording"><p>We use cookies to make our site work better. <a href="/legal/privacy-policy.html">Privacy policy</a></p></div>
+        <div id="hs-eu-cookie-confirmation-buttons-area">
+          <div id="hs-eu-confirmation-button-group">
+            <div id="hs-eu-opt-in-buttons">
+              <button id="hs-eu-confirmation-button" aria-label="Accept" tabindex="0">Accept</button>
+              <button id="hs-eu-decline-button" aria-label="Decline" tabindex="0">Decline</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

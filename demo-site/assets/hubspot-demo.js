@@ -91,6 +91,44 @@
     });
   }
 
+  // The corpus the offline search looks through: the pages and the blog posts.
+  var CORPUS = [
+    { title: 'Acme Analytics | Home', url: '/index.html', text: 'Turn website visitors into customers. Real-time funnel reporting, landing pages and A/B testing.' },
+    { title: 'Pricing', url: '/pricing.html', text: 'Simple, transparent pricing for every team.' },
+    { title: 'About Acme Analytics', url: '/about-us.html', text: 'Learn about the company and its team.' },
+    { title: 'Contact us', url: '/contact-us.html', text: 'Tell us a bit about yourself and we will be in touch.' },
+    { title: 'Testing a multilingual HubSpot site', url: '/blog/multilingual-hubspot-sites.html', text: 'Language switchers and translated pages need their own scenarios.' },
+    { title: 'Testing HubSpot forms without sending them', url: '/blog/testing-hubspot-forms.html', text: 'Validation errors can be tested without sending a single submission.' },
+    { title: 'Automating website QA with webship-js', url: '/blog/automating-website-qa.html', text: 'How we replaced manual click-throughs with Cucumber scenarios.' },
+    { title: '5 tips for testing a HubSpot CMS site', url: '/blog/hubspot-cms-tips.html', text: 'Forms, CTAs, and cookie banners each need their own testing strategy.' },
+    { title: 'Why BDD testing matters for marketing sites', url: '/blog/why-bdd-testing-matters.html', text: 'Gherkin scenarios keep your landing pages honest as they change.' }
+  ];
+
+  function escapeHtml(text) {
+    return text.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+  }
+
+  // Renders the default HubSpot search results markup (`.hs-search-results`).
+  function initSearchResults() {
+    var root = document.querySelector('[data-demo-search-results]');
+    if (!root) return;
+    var term = (new URLSearchParams(window.location.search).get('q') || '').trim();
+    var needle = term.toLowerCase();
+    var hits = needle ? CORPUS.filter(function (item) {
+      return (item.title + ' ' + item.text).toLowerCase().indexOf(needle) !== -1;
+    }) : [];
+    if (!hits.length) {
+      root.innerHTML = '<div class="hs-search__no-results"><p>Sorry. There were no results for \u201d' + escapeHtml(term) + '\u201d.</p><p>Try rewording your query, or browse through our site.</p></div>';
+      return;
+    }
+    root.innerHTML = '<p class="hs-search-results__message" role="status">Displaying 1 \u2013 ' + hits.length + ' of ' + hits.length + ' results</p>'
+      + '<ul class="hs-search-results__listing">' + hits.map(function (item) {
+        return '<li class="hs-search-results__listing__item"><div class="hs-search-results__content">'
+          + '<a class="hs-search-results__link" href="' + item.url + '"><h2 class="hs-search-results__title">' + escapeHtml(item.title) + '</h2></a>'
+          + '<p class="hs-search-results__description">' + escapeHtml(item.text) + '</p></div></li>';
+      }).join('') + '</ul>';
+  }
+
   // A CTA's href is HubSpot's tracking redirect (/cs/c/?cta_guid=...), which
   // sends the visitor on to the address in `cta_dest_link`. Do the same offline.
   function initCtas() {
@@ -104,6 +142,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initCtas();
+    initSearchResults();
     initCookieBanner();
     initForms();
   });
