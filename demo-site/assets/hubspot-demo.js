@@ -4,23 +4,51 @@
 (function () {
   'use strict';
 
+  // HubSpot saves the visitor's choice in the cookie `__hs_cookie_cat_pref`
+  // (1:true_2:true_3:true after accept, 1:false_2:false_3:false after decline),
+  // and the banner stays in the page, hidden, after an answer.
+  var CONSENT_COOKIE = '__hs_cookie_cat_pref';
+
+  function consentSaved() {
+    return document.cookie.split('; ').some(function (c) { return c.indexOf(CONSENT_COOKIE + '=') === 0; });
+  }
+
+  function saveConsent(flag) {
+    var value = encodeURIComponent('1:' + flag + '_2:' + flag + '_3:' + flag);
+    document.cookie = CONSENT_COOKIE + '=' + value + '; path=/; max-age=' + 60 * 60 * 24 * 180;
+  }
+
   function initCookieBanner() {
     var banner = document.getElementById('hs-eu-cookie-confirmation');
     if (!banner) return;
-    var accept = document.getElementById('hs-eu-confirmation-button');
-    var decline = document.getElementById('hs-eu-decline-button');
-    if (accept) {
-      accept.addEventListener('click', function () {
-        document.cookie = '__hs_cookie_cat_pref=1; path=/';
+    if (consentSaved()) {
+      banner.setAttribute('hidden', 'hidden');
+      return;
+    }
+    function bind(id, flag) {
+      var button = document.getElementById(id);
+      if (!button) return;
+      button.addEventListener('click', function () {
+        if (flag !== null) saveConsent(flag);
         banner.setAttribute('hidden', 'hidden');
       });
     }
-    if (decline) {
-      decline.addEventListener('click', function () {
-        document.cookie = '__hs_do_not_track=1; path=/';
-        banner.setAttribute('hidden', 'hidden');
-      });
-    }
+    bind('hs-eu-confirmation-button', 'true');
+    bind('hs-eu-decline-button', 'false');
+    bind('hs-eu-close-button', null);
+  }
+
+  // The chat script adds its container after the page has loaded.
+  function initChat() {
+    if (!document.documentElement.hasAttribute('data-demo-chat')) return;
+    window.setTimeout(function () {
+      var container = document.createElement('div');
+      container.id = 'hubspot-messages-iframe-container';
+      container.className = 'widget-align-right';
+      container.style.cssText = 'position:fixed;right:16px;bottom:16px;width:72px;height:72px;z-index:9';
+      container.innerHTML = '<iframe id="hubspot-conversations-iframe" title="Chat widget" src="about:blank" style="width:100%;height:100%;border:0"></iframe>';
+      document.body.appendChild(container);
+    }, 600);
   }
 
   // The messages HubSpot's forms show by default (see the validation message
@@ -144,6 +172,7 @@
     initCtas();
     initSearchResults();
     initCookieBanner();
+    initChat();
     initForms();
   });
 })();
