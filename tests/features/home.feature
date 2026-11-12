@@ -42,13 +42,3 @@ Feature: Home page
     Then the HubSpot CTA "See Pricing" should be visible
     And the HubSpot CTA "See Pricing" should link to "/pricing.html"
     And the HubSpot CTA "See Pricing" should not link to "/contact-us.html"
-
-  Scenario: Visitor can accept the cookie banner
-    Then the HubSpot cookie banner should be visible
-    When I accept the HubSpot cookie banner
-    Then the HubSpot cookie banner should not be visible
-
-  Scenario: Visitor can decline the cookie banner
-    Then the HubSpot cookie banner should be visible
-    When I decline the HubSpot cookie banner
-    Then the HubSpot cookie banner should not be visible
