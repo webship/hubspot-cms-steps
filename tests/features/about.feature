@@ -15,3 +15,10 @@ Feature: About Us page
   Scenario: About page CTA goes to the contact page
     When I click the HubSpot CTA "Get in Touch"
     Then I should be on "/contact-us.html"
+
+  Scenario: A CTA made of an image is found by its alternative text
+    Then the HubSpot CTA "Download the guide" should be visible
+    And the HubSpot CTA "Download the guide" should link to "/blog/hubspot-cms-tips.html"
+
+  Scenario: The new CTA embed is found as well
+    Then the HubSpot CTA "Read the blog" should link to "/blog/index.html"

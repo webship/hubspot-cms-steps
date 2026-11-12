@@ -213,6 +213,43 @@ function rememberForm(world, field) {
   world.hubspotForm = field.locator('xpath=ancestor-or-self::*[self::form or @data-hsfc-id="Renderer"][1]');
 }
 
+/**
+ * A RegExp that matches a whole text, ignoring the whitespace around it (the
+ * label of a menu link or a CTA as a person reads it).
+ *
+ * @param {string} text
+ * @returns {RegExp}
+ */
+function exactText(text) {
+  return new RegExp(`^\\s*${escapeRegExp(String(text).trim()).replace(/\s+/g, '\\s+')}\\s*$`);
+}
+
+/**
+ * Whether two addresses point at the same place. The page address resolves
+ * relative ones; an expected value that starts with a slash matches on the
+ * path and query alone, so "/pricing" matches "https://site.example/pricing".
+ *
+ * @param {string|null} actual
+ * @param {string} expected
+ * @param {string} base  The address of the current page.
+ * @returns {boolean}
+ */
+function sameAddress(actual, expected, base) {
+  if (actual === null || actual === undefined) return false;
+  try {
+    const a = new URL(actual, base);
+    const e = new URL(expected, base);
+    if (a.href === e.href) return true;
+    if (expected.startsWith('/')) {
+      const strip = (u) => `${u.pathname.replace(/\/$/, '')}${u.search}`;
+      return a.hostname === new URL(base).hostname && strip(a) === strip(e);
+    }
+    return false;
+  } catch {
+    return actual === expected;
+  }
+}
+
 const FORM_HINT = 'HubSpot renders a form as raw HTML (`form.hs-form`), in an iframe (`iframe.hs-form-iframe`) or, for the new forms editor, in an iframe inside `div.hs-form-frame`; the form must have finished loading. A field is found by its internal name (`email`, `firstname`), its label or its placeholder.';
 
 module.exports = {
@@ -222,6 +259,8 @@ module.exports = {
   supplied,
   escapeRegExp,
   literal,
+  exactText,
+  sameAddress,
   pause,
   actOrExplain,
   poll,

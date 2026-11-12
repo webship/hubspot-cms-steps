@@ -16,8 +16,9 @@ const { When, Then } = require('@cucumber/cucumber');
 const { friendly, smartSettle } = require('webship-js/tests/step-definitions/webship');
 const { budget, literal, actOrExplain } = require('./hubspot-helpers');
 
-// Form steps live in their own file.
+// The other step files.
 require('./hubspot-forms.steps');
+require('./hubspot-navigation.steps');
 
 const COOKIE_BANNER = '#hs-eu-cookie-confirmation';
 const COOKIE_ACCEPT = '#hs-eu-confirmation-button';
@@ -126,85 +127,6 @@ Then(/^(?:(?:the )?(?:HubSpot )?cookie banner should( not)* be visible|(?:I |we 
     hint: COOKIE_HINT,
     timeout: budget(this),
   });
-});
-
-/**
- * Click a HubSpot CTA module button/link identified by its visible label.
- *
- * Example #1: When I click the HubSpot CTA "See Pricing"
- * Example #2: When I click the HubSpot CTA "Talk to Sales"
- * Example #3: And I click the CTA "Get Started"
- * Example #4: When we click the HubSpot CTA "Start Free Trial"
- * Example #5: And click the CTA "Get in Touch"
- *
- */
-When(/^(I |we )*click the (?:HubSpot )?CTA "([^"]*)?"$/, async function (pronounCase, label) {
-  const locator = this.page.locator(CTA_BUTTON, { hasText: label }).first();
-  await actOrExplain('click the CTA', label, async () => {
-    await locator.waitFor({ state: 'visible', timeout: budget(this) });
-    await locator.click();
-  }, CTA_HINT);
-  await smartSettle(this.page, (this.minWaitTime && this.minWaitTime.page) || 3000);
-});
-
-/**
- * Assert a HubSpot CTA module button/link does (or does not) point at the
- * given href.
- *
- * Example #1: Then the HubSpot CTA "See Pricing" should link to "/pricing.html"
- * Example #2: Then the HubSpot CTA "Talk to Sales" should link to "/contact-us.html"
- * Example #3: And the CTA "Get Started" should link to "/contact-us.html"
- * Example #4: But the HubSpot CTA "Get in Touch" should not link to "/pricing.html"
- * Example #5: Then CTA "Start Free Trial" should link to "/contact-us.html"
- *
- */
-Then(/^(?:the )?(?:HubSpot )?CTA "([^"]*)?" should( not)* link to "([^"]*)?"$/, async function (label, notCase, href) {
-  const locator = this.page.locator(CTA_BUTTON, { hasText: label }).first();
-  const timeout = budget(this);
-  await actOrExplain('find the CTA', label, () => locator.waitFor({ state: 'attached', timeout }), CTA_HINT);
-  try {
-    await this.page.waitForFunction(
-      ({ sel, text, want, expected }) => {
-        const el = Array.from(document.querySelectorAll(sel)).find((a) => (a.textContent || '').includes(text));
-        return Boolean(el) && (el.getAttribute('href') === expected) === want;
-      },
-      { sel: CTA_BUTTON, text: label, want: !notCase, expected: href },
-      { timeout }
-    );
-  } catch {
-    const actual = await locator.getAttribute('href').catch(() => null);
-    throw friendly({
-      message: notCase
-        ? `Expected the "${label}" CTA not to link to "${href}", but it does.`
-        : `Expected the "${label}" CTA to link to "${href}", found "${actual}".`,
-      hint: 'The href is compared exactly as written in the markup (relative or absolute); check the CTA\'s destination URL in HubSpot.',
-    });
-  }
-});
-
-/**
- * Assert the HubSpot menu module has (or has no) link with the given label.
- *
- * Example #1: Then the HubSpot menu should have a link labeled "Pricing"
- * Example #2: Then the HubSpot menu should have a link labeled "Blog"
- * Example #3: And the menu should have a link labeled "Contact"
- * Example #4: But the HubSpot menu should not have a link labeled "Checkout"
- * Example #5: Then menu should have a link labelled "Home"
- *
- */
-Then(/^(?:the )?(?:HubSpot )?menu should( not)* have a link labell?ed "([^"]*)?"$/, async function (notCase, label) {
-  const timeout = budget(this);
-  const link = this.page.locator('.hs-menu-wrapper a', { hasText: label });
-  try {
-    await link.first().waitFor({ state: notCase ? 'detached' : 'attached', timeout });
-  } catch {
-    throw friendly({
-      message: notCase
-        ? `Expected the menu not to have a link labeled "${label}", but it does.`
-        : `Expected the menu to have a link labeled "${label}" within ${timeout} ms, but none appeared.`,
-      hint: 'Menu modules render inside `.hs-menu-wrapper`; links are matched by their visible text, so check the label in the HubSpot menu settings.',
-    });
-  }
 });
 
 /**
