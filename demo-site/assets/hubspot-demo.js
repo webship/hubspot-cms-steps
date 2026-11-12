@@ -91,7 +91,19 @@
     });
   }
 
+  // A CTA's href is HubSpot's tracking redirect (/cs/c/?cta_guid=...), which
+  // sends the visitor on to the address in `cta_dest_link`. Do the same offline.
+  function initCtas() {
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest && event.target.closest('a.cta_button[cta_dest_link]');
+      if (!link) return;
+      event.preventDefault();
+      window.location.href = link.getAttribute('cta_dest_link');
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    initCtas();
     initCookieBanner();
     initForms();
   });

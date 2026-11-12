@@ -95,3 +95,11 @@ main { padding: 32px; max-width: 960px; margin: 0 auto; }
 .hs-form-booleancheckbox { list-style: none; }
 .inputs-list { margin: 0; padding: 0; }
 .submitted-message { padding: 16px; background: #e8f5e9; border-radius: 4px; }
+.hs-menu-wrapper ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 16px; }
+.hs-menu-wrapper li { position: relative; }
+.hs-menu-wrapper a { text-decoration: none; }
+.hs-menu-wrapper li.active > a { font-weight: 700; border-bottom: 2px solid #ff7a59; }
+.hs-menu-wrapper .hs-menu-children-wrapper { display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; padding: 8px; flex-direction: column; gap: 6px; z-index: 5; white-space: nowrap; }
+.hs-menu-wrapper li:hover > .hs-menu-children-wrapper, .hs-menu-wrapper li:focus-within > .hs-menu-children-wrapper { display: flex; }
+.hs-menu-wrapper.hs-menu-mobile { display: none; }
+.hs-cta-embed { margin: 12px 0; }
