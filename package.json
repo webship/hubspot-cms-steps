@@ -1,6 +1,6 @@
 {
   "name": "@webship-js/hubspot-cms-steps",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "webship-js step pack for websites built on HubSpot CMS: forms and validation, CTAs, menus, cookie consent, blog listings, site search, languages, tracking code and page meta.",
   "main": "tests/step-definitions/hubspot.steps.js",
   "files": [
