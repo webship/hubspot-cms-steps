@@ -86,3 +86,12 @@ main { padding: 32px; max-width: 960px; margin: 0 auto; }
 #hs-eu-cookie-confirmation[hidden] { display: none; }
 
 .hs-footer { padding: 32px; text-align: center; color: #6c7a8b; font-size: 14px; }
+.hs-form-field .hs-form-required { color: #b00020; margin-left: 2px; }
+.hs-form-field .hs-input { width: 100%; max-width: 420px; padding: 6px 8px; box-sizing: border-box; }
+.hs-form-field .hs-input.invalid { border: 1px solid #b00020; }
+.hs-error-msgs { list-style: none; margin: 4px 0 0; padding: 0; color: #b00020; }
+.hs-error-msgs label { display: inline; font-weight: 400; }
+.hs-form-booleancheckbox-display { font-weight: 400 !important; }
+.hs-form-booleancheckbox { list-style: none; }
+.inputs-list { margin: 0; padding: 0; }
+.submitted-message { padding: 16px; background: #e8f5e9; border-radius: 4px; }

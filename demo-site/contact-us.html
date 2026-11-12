@@ -25,40 +25,50 @@
     <h1>Contact us</h1>
     <p>Tell us a bit about yourself and we'll be in touch.</p>
 
-    <div class="hs-form-frame" data-form-id="demo-contact-form" data-portal-id="0000000">
-      <form data-hs-demo-form class="hs-form hs-form-private" data-form-id="demo-contact-form" novalidate>
-        <div class="hs-form-field">
-          <label for="firstname">First name</label>
-          <div class="input">
-            <input id="firstname" name="firstname" class="hs-input" type="text" required>
+    <div class="hbspt-form" id="hbspt-form-demo-contact-form">
+        <form id="hsForm_demo-contact-form" method="POST" accept-charset="UTF-8" novalidate class="hs-form-private hsForm_demo-contact-form hs-form-demo-contact-form hs-form stacked hs-custom-form" data-form-id="demo-contact-form">
+          <div class="hs_firstname hs-firstname hs-fieldtype-text field hs-form-field">
+            <label id="label-firstname-demo" for="firstname-demo"><span>First name</span><span class="hs-form-required">*</span></label>
+            <div class="input"><input id="firstname-demo" name="firstname" required type="text" class="hs-input" inputmode="text" autocomplete="given-name" value=""></div>
           </div>
-        </div>
-        <div class="hs-form-field">
-          <label for="lastname">Last name</label>
-          <div class="input">
-            <input id="lastname" name="lastname" class="hs-input" type="text" required>
+          <div class="hs_lastname hs-lastname hs-fieldtype-text field hs-form-field">
+            <label id="label-lastname-demo" for="lastname-demo"><span>Last name</span><span class="hs-form-required">*</span></label>
+            <div class="input"><input id="lastname-demo" name="lastname" required type="text" class="hs-input" inputmode="text" autocomplete="family-name" value=""></div>
           </div>
-        </div>
-        <div class="hs-form-field">
-          <label for="email">Email</label>
-          <div class="input">
-            <input id="email" name="email" class="hs-input" type="email" required>
+          <div class="hs_email hs-email hs-fieldtype-text field hs-form-field">
+            <label id="label-email-demo" for="email-demo"><span>Email</span><span class="hs-form-required">*</span></label>
+            <div class="input"><input id="email-demo" name="email" required type="email" class="hs-input" inputmode="email" autocomplete="email" value=""></div>
           </div>
-        </div>
-        <div class="hs-form-field">
-          <label for="message">Message</label>
-          <div class="input">
-            <textarea id="message" name="message" class="hs-input"></textarea>
+          <div class="hs_country hs-country hs-fieldtype-select field hs-form-field">
+            <label id="label-country-demo" for="country-demo"><span>Country</span></label>
+            <div class="input">
+              <select id="country-demo" name="country" class="hs-input">
+                <option value="" selected>Please Select</option>
+                <option value="JO">Jordan</option>
+                <option value="BE">Belgium</option>
+                <option value="CH">Switzerland</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="hs_submit">
-          <input type="submit" class="hs-button primary large" value="Submit">
-        </div>
-      </form>
-      <div class="submitted-message" hidden>
-        <p>Thanks, we received your message and will be in touch shortly.</p>
+          <div class="hs_message hs-message hs-fieldtype-textarea field hs-form-field">
+            <label id="label-message-demo" for="message-demo"><span>Message</span></label>
+            <div class="input"><textarea id="message-demo" name="message" class="hs-input"></textarea></div>
+          </div>
+          <div class="hs_legal_consent hs-legal_consent hs-fieldtype-booleancheckbox field hs-form-field">
+            <div class="input">
+              <ul class="inputs-list">
+                <li class="hs-form-booleancheckbox">
+                  <label class="hs-form-booleancheckbox-display" for="legal-consent-demo"><input id="legal-consent-demo" name="LEGAL_CONSENT.subscription_type_1" type="checkbox" class="hs-input" value="true"><span>I agree to receive other communications from Acme Analytics.</span></label>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="hs_submit hs-submit">
+            <div class="hs-field-desc"></div>
+            <div class="actions"><input type="submit" class="hs-button primary large" value="Submit"></div>
+          </div>
+        </form>
       </div>
-    </div>
   </main>
 
   <footer class="hs-footer">

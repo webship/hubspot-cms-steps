@@ -23,23 +23,70 @@
     }
   }
 
+  // The messages HubSpot's forms show by default (see the validation message
+  // tables in HubSpot's developer documentation).
+  var REQUIRED = 'Please complete this required field.';
+  var REQUIRED_ALL = 'Please complete all required fields.';
+  var BAD_EMAIL = 'Email must be formatted correctly.';
+
+  function errorList(message) {
+    var list = document.createElement('ul');
+    list.className = 'no-list hs-error-msgs inputs-list';
+    list.setAttribute('role', 'alert');
+    var item = document.createElement('li');
+    var label = document.createElement('label');
+    label.className = 'hs-error-msg hs-main-font-element';
+    label.textContent = message;
+    item.appendChild(label);
+    list.appendChild(item);
+    return list;
+  }
+
+  function clearErrors(form) {
+    form.querySelectorAll('.hs-error-msgs, .hs_error_rollup').forEach(function (node) {
+      var holder = node.closest('.hs_error_rollup') || node;
+      holder.remove();
+    });
+    form.querySelectorAll('.hs-input.invalid').forEach(function (input) {
+      input.classList.remove('invalid', 'error');
+    });
+  }
+
+  // Behaves like a legacy HubSpot form: client-side validation that marks the
+  // input `invalid error` and adds `ul.hs-error-msgs` after it, one more error
+  // for the whole form, and a `div.submitted-message` in place of the form.
   function initForms() {
-    var forms = document.querySelectorAll('form[data-hs-demo-form]');
+    var forms = document.querySelectorAll('form.hs-form');
     forms.forEach(function (form) {
       form.addEventListener('submit', function (event) {
         event.preventDefault();
-        var required = form.querySelectorAll('[required]');
-        var missing = Array.prototype.some.call(required, function (field) {
-          return !field.value;
+        clearErrors(form);
+        var failed = false;
+        form.querySelectorAll('.hs-form-field').forEach(function (wrapper) {
+          var input = wrapper.querySelector('input, select, textarea');
+          if (!input || input.type === 'hidden') return;
+          var message = null;
+          if (input.required && !input.value) message = REQUIRED;
+          else if (input.type === 'email' && input.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) message = BAD_EMAIL;
+          if (message) {
+            failed = true;
+            input.classList.add('invalid', 'error');
+            wrapper.appendChild(errorList(message));
+          }
         });
-        if (missing) {
-          form.classList.add('hs-form-has-error');
+        if (failed) {
+          var rollup = document.createElement('div');
+          rollup.className = 'hs_error_rollup';
+          rollup.appendChild(errorList(REQUIRED_ALL));
+          form.insertBefore(rollup, form.querySelector('.hs_submit'));
           return;
         }
-        var frame = form.closest('.hs-form-frame') || form.parentElement;
-        var message = frame.querySelector('.submitted-message');
-        form.setAttribute('hidden', 'hidden');
-        if (message) message.removeAttribute('hidden');
+        var holder = form.parentElement;
+        var message = document.createElement('div');
+        message.className = 'submitted-message';
+        message.innerHTML = '<p>Thanks, we received your message and will be in touch shortly.</p>';
+        form.remove();
+        holder.appendChild(message);
       });
     });
   }
