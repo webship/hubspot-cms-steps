@@ -41,14 +41,14 @@ const PAGE_KINDS = {
  * class (`hs-site-page`, `hs-landing-page`, `hs-blog-listing`, `hs-blog-post`)
  * on the body, whatever the theme.
  *
- * Example #1: Then the page should be a HubSpot website page
- * Example #2: Then the page should be a HubSpot landing page
- * Example #3: And the page should be a HubSpot blog listing page
- * Example #4: And this page should be a HubSpot blog post page
- * Example #5: But the page should not be a HubSpot blog post page
+ * Example #1: Then the page should be a website page
+ * Example #2: Then the page should be a landing page
+ * Example #3: And the page should be a blog listing page
+ * Example #4: And this page should be a blog post page
+ * Example #5: But the page should not be a blog post page
  *
  */
-Then(/^(?:the |this )?page should( not)* be a HubSpot (website|landing|blog listing|blog post) page$/, async function (notCase, kind) {
+Then(/^(?:the |this )?page should( not)* be a (website|landing|blog listing|blog post) page$/, async function (notCase, kind) {
   const { selector, label } = PAGE_KINDS[kind];
   const timeout = budget(this);
   const found = await poll(this, async () => ((await this.page.locator(selector).count()) > 0) === !notCase, timeout);
@@ -100,14 +100,14 @@ Then(/^(?:the |this )?page should( not)* be a HubSpot page$/, async function (no
  * optionally for the given portal (account) id. The tracking code is
  * `script#hs-script-loader`, whose address ends in `<portal id>.js`.
  *
- * Example #1: Then the HubSpot tracking code should be installed
- * Example #2: And the HubSpot tracking code should be installed for portal "213255"
+ * Example #1: Then the tracking code should be installed
+ * Example #2: And the tracking code should be installed for portal "213255"
  * Example #3: Then the tracking code should be installed
- * Example #4: But the HubSpot tracking code should not be installed
+ * Example #4: But the tracking code should not be installed
  * Example #5: Then the tracking code should be installed for portal "0000000"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?tracking code should( not)* be installed(?: for portal "(\d+)")?$/, async function (notCase, portal) {
+Then(/^(?:the )?tracking code should( not)* be installed(?: for portal "(\d+)")?$/, async function (notCase, portal) {
   const scripts = this.page.locator(TRACKING_SCRIPT);
   let sources = [];
   const ok = await poll(this, async () => {
@@ -130,14 +130,14 @@ Then(/^(?:the )?(?:HubSpot )?tracking code should( not)* be installed(?: for por
  * `#hubspot-messages-iframe-container`, which the chat script adds. "Present"
  * means in the page; "visible" means shown to the visitor.
  *
- * Example #1: Then the HubSpot chat widget should be present
+ * Example #1: Then the chat widget should be present
  * Example #2: And the chat widget should be visible
- * Example #3: Then the HubSpot chat widget should be visible
+ * Example #3: Then the chat widget should be visible
  * Example #4: But the chat widget should not be present
  * Example #5: Then chat widget should be present
  *
  */
-Then(/^(?:the )?(?:HubSpot )?chat widget should( not)* be (present|visible)$/, async function (notCase, state) {
+Then(/^(?:the )?chat widget should( not)* be (present|visible)$/, async function (notCase, state) {
   const container = this.page.locator(CHAT_CONTAINER).first();
   const ok = await poll(this, async () => {
     const present = (await this.page.locator(CHAT_CONTAINER).count()) > 0;
@@ -157,14 +157,14 @@ Then(/^(?:the )?(?:HubSpot )?chat widget should( not)* be (present|visible)$/, a
  * `.meetings-iframe-container` with its iframe, optionally for a meetings link
  * (the part of the address after the host, such as "/meetings/jane").
  *
- * Example #1: Then the page should have a HubSpot meetings embed
- * Example #2: And the page should have a HubSpot meetings embed for "/meetings/setup/head-of-growth-call"
- * Example #3: Then this page should have a HubSpot meetings embed
- * Example #4: But the page should not have a HubSpot meetings embed
- * Example #5: Then page should have a HubSpot meetings embed for "/meetings/jane"
+ * Example #1: Then the page should have a meetings embed
+ * Example #2: And the page should have a meetings embed for "/meetings/setup/head-of-growth-call"
+ * Example #3: Then this page should have a meetings embed
+ * Example #4: But the page should not have a meetings embed
+ * Example #5: Then page should have a meetings embed for "/meetings/jane"
  *
  */
-Then(/^(?:the |this )?page should( not)* have a (?:HubSpot )?meetings embed(?: for "([^"]*)")?$/, async function (notCase, link) {
+Then(/^(?:the |this )?page should( not)* have a meetings embed(?: for "([^"]*)")?$/, async function (notCase, link) {
   const frames = this.page.locator('.meetings-iframe-container iframe');
   let sources = [];
   const ok = await poll(this, async () => {
@@ -186,14 +186,14 @@ Then(/^(?:the |this )?page should( not)* have a (?:HubSpot )?meetings embed(?: f
  * Assert the page does (or does not) have a language switcher: the language
  * switcher module (`.lang_switcher_class`).
  *
- * Example #1: Then the page should have a HubSpot language switcher
+ * Example #1: Then the page should have a language switcher
  * Example #2: And the page should have a language switcher
- * Example #3: Then this page should have a HubSpot language switcher
+ * Example #3: Then this page should have a language switcher
  * Example #4: But the page should not have a language switcher
- * Example #5: Then page should not have a HubSpot language switcher
+ * Example #5: Then page should not have a language switcher
  *
  */
-Then(/^(?:the |this )?page should( not)* have a (?:HubSpot )?language switcher$/, async function (notCase) {
+Then(/^(?:the |this )?page should( not)* have a language switcher$/, async function (notCase) {
   const ok = await poll(this, async () => ((await this.page.locator(LANGUAGE_SWITCHER).count()) > 0) === !notCase);
   if (!ok) {
     throw friendly({

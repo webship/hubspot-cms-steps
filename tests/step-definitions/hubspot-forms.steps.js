@@ -71,14 +71,14 @@ function fieldState(field) {
  * Assert the page does (or does not) carry a HubSpot form: a legacy
  * `form.hs-form` or a form of the new editor, in the page or in an iframe.
  *
- * Example #1: Then the page should have a HubSpot form
+ * Example #1: Then the page should have a form
  * Example #2: And the page should have a form
- * Example #3: Then this page should have a HubSpot form
- * Example #4: But the page should not have a HubSpot form
+ * Example #3: Then this page should have a form
+ * Example #4: But the page should not have a form
  * Example #5: Then page should not have a form
  *
  */
-Then(/^(?:the |this )?page should( not)* have a (?:HubSpot )?form$/, async function (notCase) {
+Then(/^(?:the |this )?page should( not)* have a form$/, async function (notCase) {
   const found = await poll(this, async () => (await formFrames(this)).length > 0 || null);
   if (notCase) {
     const absent = await poll(this, async () => (await formFrames(this)).length === 0 || null, 2000);
@@ -96,14 +96,14 @@ Then(/^(?:the |this )?page should( not)* have a (?:HubSpot )?form$/, async funct
  * Assert the HubSpot form does (or does not) have a field, found by its
  * internal property name, its label or its placeholder.
  *
- * Example #1: Then the HubSpot form should have a field "email"
+ * Example #1: Then the form should have a field "email"
  * Example #2: And the form should have a field "firstname"
- * Example #3: Then the HubSpot form should have a field "Company name"
+ * Example #3: Then the form should have a field "Company name"
  * Example #4: But the form should not have a field "fax"
- * Example #5: Then the HubSpot form should not have a field "password"
+ * Example #5: Then the form should not have a field "password"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?form should( not)* have a field "([^"]*)"$/, async function (notCase, field) {
+Then(/^(?:the )?form should( not)* have a field "([^"]*)"$/, async function (notCase, field) {
   const found = await findInForms(this, (frame) => fieldLocators(frame, field), notCase ? 1000 : budget(this));
   if (notCase && found) {
     throw friendly({ message: `Expected the form not to have a field "${field}", but it does.`, hint: FORM_HINT });
@@ -119,14 +119,14 @@ Then(/^(?:the )?(?:HubSpot )?form should( not)* have a field "([^"]*)"$/, async 
  * visible option text (or the option value). The form the field is in is the
  * one the next form step works in.
  *
- * Example #1: When I fill in the HubSpot form field "email" with "jane@example.com"
- * Example #2: When I fill in the HubSpot form field "firstname" with "Jane"
+ * Example #1: When I fill in the form field "email" with "jane@example.com"
+ * Example #2: When I fill in the form field "firstname" with "Jane"
  * Example #3: And I fill in the form field "lastname" with "Doe"
- * Example #4: And fill in the HubSpot form field "message" with "Please call me back"
+ * Example #4: And fill in the form field "message" with "Please call me back"
  * Example #5: When we fill in the form field "country" with "Jordan"
  *
  */
-When(/^(I |we )*fill in the (?:HubSpot )?form field "([^"]*)" with "([^"]*)"$/, async function (pronounCase, field, value) {
+When(/^(I |we )*fill in the form field "([^"]*)" with "([^"]*)"$/, async function (pronounCase, field, value) {
   const locator = await findInForms(this, (frame) => fieldLocators(frame, field));
   if (!locator) {
     throw friendly({ action: 'find the form field', target: field, hint: FORM_HINT });
@@ -149,14 +149,14 @@ When(/^(I |we )*fill in the (?:HubSpot )?form field "([^"]*)" with "([^"]*)"$/, 
  * Tick (check) or untick (uncheck) a checkbox of the HubSpot form, found by
  * its internal name or its label, such as the consent to communications.
  *
- * Example #1: When I tick the HubSpot form checkbox "I agree to receive other communications"
+ * Example #1: When I tick the form checkbox "I agree to receive other communications"
  * Example #2: And I tick the form checkbox "LEGAL_CONSENT.subscription_type_1"
- * Example #3: When we untick the HubSpot form checkbox "I agree to receive other communications"
+ * Example #3: When we untick the form checkbox "I agree to receive other communications"
  * Example #4: And check the form checkbox "I agree to the privacy policy"
  * Example #5: When I uncheck the form checkbox "I agree to the privacy policy"
  *
  */
-When(/^(I |we )*(tick|untick|check|uncheck) the (?:HubSpot )?form checkbox "([^"]*)"$/, async function (pronounCase, action, field) {
+When(/^(I |we )*(tick|untick|check|uncheck) the form checkbox "([^"]*)"$/, async function (pronounCase, action, field) {
   const locator = await findInForms(this, (frame) => fieldLocators(frame, field));
   if (!locator) {
     throw friendly({ action: `${action} the form checkbox`, target: field, hint: FORM_HINT });
@@ -171,14 +171,14 @@ When(/^(I |we )*(tick|untick|check|uncheck) the (?:HubSpot )?form checkbox "([^"
  * first visible one) and wait for the page to settle, so the response has a
  * chance to replace the form with its thank-you message or its errors.
  *
- * Example #1: When I submit the HubSpot form
- * Example #2: And I submit the HubSpot form
+ * Example #1: When I submit the form
+ * Example #2: And I submit the form
  * Example #3: When we submit the form
- * Example #4: And submit the HubSpot form
+ * Example #4: And submit the form
  * Example #5: When I submit the form
  *
  */
-When(/^(I |we )*submit the (?:HubSpot )?form$/, async function (pronounCase) {
+When(/^(I |we )*submit the form$/, async function (pronounCase) {
   const form = await activeForm(this);
   if (!form) {
     throw friendly({ action: 'submit the form', target: FORM_SELECTOR, hint: FORM_HINT });
@@ -200,14 +200,14 @@ When(/^(I |we )*submit the (?:HubSpot )?form$/, async function (pronounCase) {
  * Assert a field of the HubSpot form is (or is not) required: the input has
  * `required`, or its label carries the required marker (`.hs-form-required`).
  *
- * Example #1: Then the HubSpot form field "email" should be required
+ * Example #1: Then the form field "email" should be required
  * Example #2: And the form field "firstname" should be required
- * Example #3: Then the HubSpot form field "message" should not be required
+ * Example #3: Then the form field "message" should not be required
  * Example #4: But the form field "phone" should not be required
  * Example #5: Then form field "email" should be required
  *
  */
-Then(/^(?:the )?(?:HubSpot )?form field "([^"]*)" should( not)* be required$/, async function (field, notCase) {
+Then(/^(?:the )?form field "([^"]*)" should( not)* be required$/, async function (field, notCase) {
   const locator = await findInForms(this, (frame) => fieldLocators(frame, field));
   if (!locator) {
     throw friendly({ message: `Expected the form to have a field "${field}", but none is visible.`, hint: FORM_HINT });
@@ -228,14 +228,14 @@ Then(/^(?:the )?(?:HubSpot )?form field "([^"]*)" should( not)* be required$/, a
  * error, optionally containing the given text (`ul.hs-error-msgs` after the
  * field, or an input marked `invalid`). Submit the form first.
  *
- * Example #1: Then the HubSpot form field "email" should show an error
+ * Example #1: Then the form field "email" should show an error
  * Example #2: And the form field "email" should show an error containing "required"
- * Example #3: Then the HubSpot form field "firstname" should show an error containing "Please complete this required field."
+ * Example #3: Then the form field "firstname" should show an error containing "Please complete this required field."
  * Example #4: But the form field "message" should not show an error
  * Example #5: Then form field "email" should not show an error
  *
  */
-Then(/^(?:the )?(?:HubSpot )?form field "([^"]*)" should( not)* show an error(?: containing "([^"]*)")?$/, async function (field, notCase, text) {
+Then(/^(?:the )?form field "([^"]*)" should( not)* show an error(?: containing "([^"]*)")?$/, async function (field, notCase, text) {
   const locator = await findInForms(this, (frame) => fieldLocators(frame, field));
   if (!locator) {
     throw friendly({ message: `Expected the form to have a field "${field}", but none is visible.`, hint: FORM_HINT });
@@ -261,14 +261,14 @@ Then(/^(?:the )?(?:HubSpot )?form field "([^"]*)" should( not)* show an error(?:
  * containing the given text: a field error or the message for the whole form
  * ("Please complete all required fields."). Submit the form first.
  *
- * Example #1: Then the HubSpot form should show an error
+ * Example #1: Then the form should show an error
  * Example #2: And the form should show an error containing "required"
- * Example #3: Then the HubSpot form should show an error containing "Please complete all required fields."
+ * Example #3: Then the form should show an error containing "Please complete all required fields."
  * Example #4: But the form should not show an error
  * Example #5: Then form should not show an error containing "required"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?form should( not)* show an error(?: containing "([^"]*)")?$/, async function (notCase, text) {
+Then(/^(?:the )?form should( not)* show an error(?: containing "([^"]*)")?$/, async function (notCase, text) {
   let messages = [];
   const collect = async () => {
     const found = [];
@@ -301,14 +301,14 @@ Then(/^(?:the )?(?:HubSpot )?form should( not)* show an error(?: containing "([^
  * visible, optionally containing the given text. A form set to redirect
  * leaves the page instead; assert the new address with "I should be on ...".
  *
- * Example #1: Then the HubSpot form should show a success message
- * Example #2: Then the HubSpot form should show a success message containing "Thanks"
+ * Example #1: Then the form should show a success message
+ * Example #2: Then the form should show a success message containing "Thanks"
  * Example #3: And the form should show a success message containing "received your message"
- * Example #4: But the HubSpot form should not show a success message
+ * Example #4: But the form should not show a success message
  * Example #5: Then the form should not show a success message containing "error"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?form should( not)* show a success message(?: containing "([^"]*)")?$/, async function (notCase, text) {
+Then(/^(?:the )?form should( not)* show a success message(?: containing "([^"]*)")?$/, async function (notCase, text) {
   let seen = '';
   const probe = async () => {
     for (const frame of this.page.frames()) {

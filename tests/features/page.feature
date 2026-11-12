@@ -7,20 +7,20 @@ Feature: What a HubSpot page loads and declares
 
   Scenario: The home page has the tracking code and the chat widget
     Given I am on "/index.html"
-    Then the page should be a HubSpot website page
-    And the HubSpot tracking code should be installed
-    And the HubSpot tracking code should be installed for portal "0000000"
-    And the HubSpot tracking code should not be installed for portal "1234567"
-    And the HubSpot chat widget should be present
-    And the HubSpot chat widget should be visible
+    Then the page should be a website page
+    And the tracking code should be installed
+    And the tracking code should be installed for portal "0000000"
+    And the tracking code should not be installed for portal "1234567"
+    And the chat widget should be present
+    And the chat widget should be visible
 
   Scenario: A page without the chat script has no chat widget
     Given I am on "/pricing.html"
-    Then the HubSpot chat widget should not be present
+    Then the chat widget should not be present
 
   Scenario: The home page is available in German
     Given I am on "/index.html"
-    Then the page should have a HubSpot language switcher
+    Then the page should have a language switcher
     And the page should be available in the language "en"
     And the page should be available in the language "de"
     And the page should not be available in the language "ja"
@@ -31,14 +31,14 @@ Feature: What a HubSpot page loads and declares
 
   Scenario: A page without translations has no language switcher
     Given I am on "/pricing.html"
-    Then the page should not have a HubSpot language switcher
+    Then the page should not have a language switcher
     And the page should not be available in the language "de"
 
   Scenario: The contact page embeds the meetings tool
     Given I am on "/contact-us.html"
-    Then the page should have a HubSpot meetings embed
-    And the page should have a HubSpot meetings embed for "/meetings/demo-sales-call"
-    And the page should not have a HubSpot meetings embed for "/meetings/someone-else"
+    Then the page should have a meetings embed
+    And the page should have a meetings embed for "/meetings/demo-sales-call"
+    And the page should not have a meetings embed for "/meetings/someone-else"
 
   Scenario: The canonical address is declared
     Given I am on "/pricing.html"
@@ -47,7 +47,7 @@ Feature: What a HubSpot page loads and declares
 
   Scenario: A landing page can be hidden from search engines
     Given I am on "/thank-you.html"
-    Then the page should be a HubSpot landing page
-    And the page should not be a HubSpot website page
+    Then the page should be a landing page
+    And the page should not be a website page
     And the page should be hidden from search engines
     And the page should have the canonical address "/thank-you.html"

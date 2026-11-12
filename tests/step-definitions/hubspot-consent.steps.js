@@ -60,28 +60,28 @@ async function savedConsent(world) {
 /**
  * Accept the HubSpot cookie consent banner.
  *
- * Example #1: When I accept the HubSpot cookie banner
- * Example #2: And I accept the HubSpot cookie banner
+ * Example #1: When I accept the cookie banner
+ * Example #2: And I accept the cookie banner
  * Example #3: When we accept the cookie banner
- * Example #4: And accept the HubSpot cookie banner
+ * Example #4: And accept the cookie banner
  * Example #5: When I accept the cookie banner
  *
  */
-When(/^(I |we )*accept the (?:HubSpot )?cookie banner$/, async function (pronounCase) {
+When(/^(I |we )*accept the cookie banner$/, async function (pronounCase) {
   await clickBannerButton(this, 'accept the cookie banner', COOKIE_ACCEPT);
 });
 
 /**
  * Decline the HubSpot cookie consent banner.
  *
- * Example #1: When I decline the HubSpot cookie banner
- * Example #2: And I decline the HubSpot cookie banner
+ * Example #1: When I decline the cookie banner
+ * Example #2: And I decline the cookie banner
  * Example #3: When we decline the cookie banner
- * Example #4: And decline the HubSpot cookie banner
+ * Example #4: And decline the cookie banner
  * Example #5: When I decline the cookie banner
  *
  */
-When(/^(I |we )*decline the (?:HubSpot )?cookie banner$/, async function (pronounCase) {
+When(/^(I |we )*decline the cookie banner$/, async function (pronounCase) {
   await clickBannerButton(this, 'decline the cookie banner', COOKIE_DECLINE);
 });
 
@@ -89,14 +89,14 @@ When(/^(I |we )*decline the (?:HubSpot )?cookie banner$/, async function (pronou
  * Dismiss the HubSpot cookie banner with its close button (the "x" some
  * banners show), which closes the banner without choosing.
  *
- * Example #1: When I dismiss the HubSpot cookie banner
- * Example #2: And I dismiss the HubSpot cookie banner
+ * Example #1: When I dismiss the cookie banner
+ * Example #2: And I dismiss the cookie banner
  * Example #3: When we dismiss the cookie banner
- * Example #4: And dismiss the HubSpot cookie banner
+ * Example #4: And dismiss the cookie banner
  * Example #5: When I dismiss the cookie banner
  *
  */
-When(/^(I |we )*dismiss the (?:HubSpot )?cookie banner$/, async function (pronounCase) {
+When(/^(I |we )*dismiss the cookie banner$/, async function (pronounCase) {
   await clickBannerButton(this, 'dismiss the cookie banner', COOKIE_CLOSE);
 });
 
@@ -105,14 +105,14 @@ When(/^(I |we )*dismiss the (?:HubSpot )?cookie banner$/, async function (pronou
  * form passes when the banner was answered (it stays in the page, hidden) or
  * is absent.
  *
- * Example #1: Then the HubSpot cookie banner should be visible
- * Example #2: Then the HubSpot cookie banner should not be visible
+ * Example #1: Then the cookie banner should be visible
+ * Example #2: Then the cookie banner should not be visible
  * Example #3: And the cookie banner should be visible
  * Example #4: But the cookie banner should not be visible
- * Example #5: Then I should see the HubSpot cookie banner
+ * Example #5: Then I should see the cookie banner
  *
  */
-Then(/^(?:(?:the )?(?:HubSpot )?cookie banner should( not)* be visible|(?:I |we )*should( not)* see the (?:HubSpot )?cookie banner)$/, async function (notVisible, notSee) {
+Then(/^(?:(?:the )?cookie banner should( not)* be visible|(?:I |we )*should( not)* see the cookie banner)$/, async function (notVisible, notSee) {
   const absent = Boolean(notVisible || notSee);
   const timeout = budget(this);
   try {
@@ -130,14 +130,14 @@ Then(/^(?:(?:the )?(?:HubSpot )?cookie banner should( not)* be visible|(?:I |we 
  * (every category false) or saved (a choice was made, whichever it was). It
  * reads the cookie `__hs_cookie_cat_pref`.
  *
- * Example #1: Then the HubSpot cookie consent should be accepted
+ * Example #1: Then the cookie consent should be accepted
  * Example #2: And the cookie consent should be declined
- * Example #3: Then the HubSpot cookie consent should be saved
+ * Example #3: Then the cookie consent should be saved
  * Example #4: But the cookie consent should not be saved
  * Example #5: Then cookie consent should not be accepted
  *
  */
-Then(/^(?:the )?(?:HubSpot )?cookie consent should( not)* be (accepted|declined|saved)$/, async function (notCase, state) {
+Then(/^(?:the )?cookie consent should( not)* be (accepted|declined|saved)$/, async function (notCase, state) {
   let value = null;
   const matches = (v) => {
     if (v === null) return false;
@@ -162,14 +162,14 @@ Then(/^(?:the )?(?:HubSpot )?cookie consent should( not)* be (accepted|declined|
  * does not show: it sets the cookie `__hs_cookie_cat_pref` for the site.
  * Use it before the page is opened.
  *
- * Example #1: Given the HubSpot cookie consent is accepted
+ * Example #1: Given the cookie consent is accepted
  * Example #2: And the cookie consent is declined
  * Example #3: Given the cookie consent is accepted
- * Example #4: And the HubSpot cookie consent is declined
+ * Example #4: And the cookie consent is declined
  * Example #5: Given cookie consent is accepted
  *
  */
-Given(/^(?:the )?(?:HubSpot )?cookie consent is (accepted|declined)$/, async function (state) {
+Given(/^(?:the )?cookie consent is (accepted|declined)$/, async function (state) {
   const flag = state === 'accepted' ? 'true' : 'false';
   await this.page.context().addCookies([{
     name: CONSENT_COOKIE,

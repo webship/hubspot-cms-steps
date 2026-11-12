@@ -60,14 +60,14 @@ function postLinks(arg) {
  * their links (see the top of this file), and the count is polled for the wait
  * budget, so a listing that is still rendering is waited for.
  *
- * Example #1: Then the HubSpot blog should list at least 1 post
- * Example #2: Then the HubSpot blog should list at least 3 posts
+ * Example #1: Then the blog should list at least 1 post
+ * Example #2: Then the blog should list at least 3 posts
  * Example #3: And the blog should list at least 2 posts
  * Example #4: Then blog should list at least 3 posts
- * Example #5: Then the HubSpot blog should list at least 1 posts
+ * Example #5: Then the blog should list at least 1 posts
  *
  */
-Then(/^(?:the )?(?:HubSpot )?blog should list at least (\d+) posts?$/, async function (minimumStr) {
+Then(/^(?:the )?blog should list at least (\d+) posts?$/, async function (minimumStr) {
   const minimum = Number(minimumStr);
   let count = 0;
   const ok = await poll(this, async () => {
@@ -88,14 +88,14 @@ Then(/^(?:the )?(?:HubSpot )?blog should list at least (\d+) posts?$/, async fun
  * Open a blog post from the listing by its title: the text, aria-label, title
  * or image alt of its link.
  *
- * Example #1: When I open the HubSpot blog post titled "Why BDD testing matters for marketing sites"
- * Example #2: When I open the HubSpot blog post titled "5 tips for testing a HubSpot CMS site"
+ * Example #1: When I open the blog post titled "Why BDD testing matters for marketing sites"
+ * Example #2: When I open the blog post titled "5 tips for testing a HubSpot CMS site"
  * Example #3: And I open the blog post titled "Automating website QA with webship-js"
- * Example #4: When we open the HubSpot blog post titled "5 tips for testing a HubSpot CMS site"
+ * Example #4: When we open the blog post titled "5 tips for testing a HubSpot CMS site"
  * Example #5: And open the blog post titled "Why BDD testing matters for marketing sites"
  *
  */
-When(/^(I |we )*open the (?:HubSpot )?blog post titled "([^"]*)"$/, async function (pronounCase, title) {
+When(/^(I |we )*open the blog post titled "([^"]*)"$/, async function (pronounCase, title) {
   let handle = null;
   await poll(this, async () => {
     const candidate = await this.page.evaluateHandle(postLinks, { title });
@@ -112,14 +112,14 @@ When(/^(I |we )*open the (?:HubSpot )?blog post titled "([^"]*)"$/, async functi
 /**
  * Go to a numbered page of the blog listing, through its link (`/page/2`).
  *
- * Example #1: When I go to page 2 of the HubSpot blog
+ * Example #1: When I go to page 2 of the blog
  * Example #2: And I go to page 3 of the blog
- * Example #3: When we go to page 2 of the HubSpot blog
+ * Example #3: When we go to page 2 of the blog
  * Example #4: And go to page 2 of the blog
  * Example #5: When I go to page 1 of the blog
  *
  */
-When(/^(I |we )*go to page (\d+) of the (?:HubSpot )?blog$/, async function (pronounCase, number) {
+When(/^(I |we )*go to page (\d+) of the blog$/, async function (pronounCase, number) {
   const links = this.page.locator(`a[href$="/page/${number}"], a[href$="/page/${number}/"], a[href*="/page/${number}?"]`);
   const page1 = Number(number) === 1;
   const target = page1 ? this.page.locator('[class*="pagination"] a, nav a').filter({ hasText: exactText('1') }) : links;
@@ -134,14 +134,14 @@ When(/^(I |we )*go to page (\d+) of the (?:HubSpot )?blog$/, async function (pro
  * Assert the blog listing does (or does not) have pagination: a link to the
  * second page (`/page/2`).
  *
- * Example #1: Then the HubSpot blog should have pagination
+ * Example #1: Then the blog should have pagination
  * Example #2: And the blog should have pagination
- * Example #3: Then the HubSpot blog should not have pagination
+ * Example #3: Then the blog should not have pagination
  * Example #4: But the blog should not have pagination
  * Example #5: Then blog should have pagination
  *
  */
-Then(/^(?:the )?(?:HubSpot )?blog should( not)* have pagination$/, async function (notCase) {
+Then(/^(?:the )?blog should( not)* have pagination$/, async function (notCase) {
   const links = this.page.locator('a[href$="/page/2"], a[href$="/page/2/"], a[href*="/page/2?"]');
   const ok = await poll(this, async () => ((await links.count()) > 0) === !notCase);
   if (!ok) {
@@ -157,14 +157,14 @@ Then(/^(?:the )?(?:HubSpot )?blog should( not)* have pagination$/, async functio
  * listing (`/<blog>/tag/<tag>`): the tag filter of a listing, or the tags of a
  * post.
  *
- * Example #1: Then the HubSpot blog should have the tag "Testing"
+ * Example #1: Then the blog should have the tag "Testing"
  * Example #2: And the blog should have the tag "HubSpot"
- * Example #3: Then the HubSpot blog post should be tagged "Testing"
+ * Example #3: Then the blog post should be tagged "Testing"
  * Example #4: But the blog post should not be tagged "Marketing"
  * Example #5: Then blog should not have the tag "Finance"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?blog(?: post)? should( not)* (?:have the tag|be tagged) "([^"]*)"$/, async function (notCase, tag) {
+Then(/^(?:the )?blog(?: post)? should( not)* (?:have the tag|be tagged) "([^"]*)"$/, async function (notCase, tag) {
   const links = this.page.locator('a[href*="/tag/"]').filter({ hasText: exactText(tag, true) });
   const ok = await poll(this, async () => ((await links.count()) > 0) === !notCase);
   if (!ok) {
@@ -178,14 +178,14 @@ Then(/^(?:the )?(?:HubSpot )?blog(?: post)? should( not)* (?:have the tag|be tag
 /**
  * Open a tag's listing from a blog page, through its link.
  *
- * Example #1: When I open the HubSpot blog tag "Testing"
+ * Example #1: When I open the blog tag "Testing"
  * Example #2: And I open the blog tag "HubSpot"
- * Example #3: When we open the HubSpot blog tag "Automation"
+ * Example #3: When we open the blog tag "Automation"
  * Example #4: And open the blog tag "Marketing"
  * Example #5: When I open the blog tag "Testing"
  *
  */
-When(/^(I |we )*open the (?:HubSpot )?blog tag "([^"]*)"$/, async function (pronounCase, tag) {
+When(/^(I |we )*open the blog tag "([^"]*)"$/, async function (pronounCase, tag) {
   const links = this.page.locator('a[href*="/tag/"]').filter({ hasText: exactText(tag, true) });
   await actOrExplain('open the blog tag', tag, async () => {
     await links.first().waitFor({ state: 'visible', timeout: budget(this) });
@@ -198,14 +198,14 @@ When(/^(I |we )*open the (?:HubSpot )?blog tag "([^"]*)"$/, async function (pron
  * Assert the blog post does (or does not) name an author, as a link to the
  * author's listing (`/<blog>/author/<author>`).
  *
- * Example #1: Then the HubSpot blog post should be written by "Jane Doe"
+ * Example #1: Then the blog post should be written by "Jane Doe"
  * Example #2: And the blog post should be written by "John Roe"
- * Example #3: Then the HubSpot blog should be written by "Jane Doe"
+ * Example #3: Then the blog should be written by "Jane Doe"
  * Example #4: But the blog post should not be written by "John Roe"
  * Example #5: Then blog post should be written by "Jane Doe"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?blog(?: post)? should( not)* be written by "([^"]*)"$/, async function (notCase, author) {
+Then(/^(?:the )?blog(?: post)? should( not)* be written by "([^"]*)"$/, async function (notCase, author) {
   const links = this.page.locator('a[href*="/author/"]').filter({ hasText: exactText(author) });
   const ok = await poll(this, async () => ((await links.count()) > 0) === !notCase);
   if (!ok) {

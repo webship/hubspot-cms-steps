@@ -14,34 +14,34 @@ Feature: HubSpot steps on a public site
   Scenario: A raw HTML form shows its validation errors when it is submitted empty
     Given I am on "/contact-us"
     Then the page should be a HubSpot page
-    And the page should have a HubSpot form
-    And the HubSpot form should have a field "email"
-    And the HubSpot form should have a field "firstname"
-    And the HubSpot form field "email" should be required
-    When I submit the HubSpot form
-    Then the HubSpot form field "firstname" should show an error containing "Please complete this required field."
-    And the HubSpot form field "email" should show an error
-    And the HubSpot form should show an error containing "Please complete all required fields."
-    And the HubSpot form should not show a success message
+    And the page should have a form
+    And the form should have a field "email"
+    And the form should have a field "firstname"
+    And the form field "email" should be required
+    When I submit the form
+    Then the form field "firstname" should show an error containing "Please complete this required field."
+    And the form field "email" should show an error
+    And the form should show an error containing "Please complete all required fields."
+    And the form should not show a success message
 
   Scenario: The cookie banner is answered and the choice is saved
     Given I am on "/blog"
-    Then the HubSpot cookie banner should be visible
-    And the HubSpot cookie consent should not be saved
-    When I decline the HubSpot cookie banner
-    Then the HubSpot cookie banner should not be visible
-    And the HubSpot cookie consent should be declined
+    Then the cookie banner should be visible
+    And the cookie consent should not be saved
+    When I decline the cookie banner
+    Then the cookie banner should not be visible
+    And the cookie consent should be declined
 
   Scenario: A scenario can start with the cookie consent answered
-    Given the HubSpot cookie consent is accepted
+    Given the cookie consent is accepted
     And I am on "/blog"
-    Then the HubSpot cookie consent should be accepted
+    Then the cookie consent should be accepted
 
   Scenario: The page loads the tracking code and declares its translations
     Given I am on "/"
-    Then the HubSpot tracking code should be installed for portal "213255"
-    And the HubSpot tracking code should not be installed for portal "1"
-    And the page should have a HubSpot language switcher
+    Then the tracking code should be installed for portal "213255"
+    And the tracking code should not be installed for portal "1"
+    And the page should have a language switcher
     And the page should be available in the language "de"
     And the page should be available in the language "fr"
     And the page should not be available in the language "ja"

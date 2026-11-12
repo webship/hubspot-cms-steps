@@ -61,14 +61,14 @@ async function visibleSearchInput(world) {
 /**
  * Assert the page does (or does not) have a site search field.
  *
- * Example #1: Then the page should have a HubSpot site search
+ * Example #1: Then the page should have a site search
  * Example #2: And the page should have a site search
- * Example #3: Then this page should have a HubSpot site search
+ * Example #3: Then this page should have a site search
  * Example #4: But the page should not have a site search
- * Example #5: Then page should not have a HubSpot site search
+ * Example #5: Then page should not have a site search
  *
  */
-Then(/^(?:the |this )?page should( not)* have a (?:HubSpot )?site search$/, async function (notCase) {
+Then(/^(?:the |this )?page should( not)* have a site search$/, async function (notCase) {
   const ok = await poll(this, async () => ((await this.page.locator(SEARCH_INPUT).count()) > 0) === !notCase);
   if (!ok) {
     throw friendly({
@@ -82,14 +82,14 @@ Then(/^(?:the |this )?page should( not)* have a (?:HubSpot )?site search$/, asyn
  * Search the site: type the term into the search field and press Enter, then
  * wait for the results page.
  *
- * Example #1: When I search the HubSpot site for "pricing"
+ * Example #1: When I search the site for "pricing"
  * Example #2: And I search the site for "forms"
- * Example #3: When we search the HubSpot site for "HubSpot"
+ * Example #3: When we search the site for "HubSpot"
  * Example #4: And search the site for "webship-js"
  * Example #5: When I search the site for "zzzzqqq"
  *
  */
-When(/^(I |we )*search the (?:HubSpot )?site for "([^"]*)"$/, async function (pronounCase, term) {
+When(/^(I |we )*search the site for "([^"]*)"$/, async function (pronounCase, term) {
   const input = await visibleSearchInput(this);
   if (!input) {
     throw friendly({ action: 'search the site', target: term, hint: SEARCH_HINT });
@@ -104,14 +104,14 @@ When(/^(I |we )*search the (?:HubSpot )?site for "([^"]*)"$/, async function (pr
 /**
  * Assert the search results list at least N results.
  *
- * Example #1: Then the HubSpot search results should list at least 1 result
+ * Example #1: Then the search results should list at least 1 result
  * Example #2: And the search results should list at least 3 results
- * Example #3: Then the HubSpot search results should list at least 2 results
+ * Example #3: Then the search results should list at least 2 results
  * Example #4: And the search results should list at least 1 results
  * Example #5: Then search results should list at least 5 results
  *
  */
-Then(/^(?:the )?(?:HubSpot )?search results should list at least (\d+) results?$/, async function (minimumStr) {
+Then(/^(?:the )?search results should list at least (\d+) results?$/, async function (minimumStr) {
   const minimum = Number(minimumStr);
   let count = 0;
   const ok = await poll(this, async () => {
@@ -127,14 +127,14 @@ Then(/^(?:the )?(?:HubSpot )?search results should list at least (\d+) results?$
  * Assert the search found nothing: the results page lists no result and says
  * so.
  *
- * Example #1: Then the HubSpot search should find no results
+ * Example #1: Then the search should find no results
  * Example #2: And the search should find no results
- * Example #3: And the HubSpot search should find no results
+ * Example #3: And the search should find no results
  * Example #4: But the search should find no results
  * Example #5: Then search should find no results
  *
  */
-Then(/^(?:the )?(?:HubSpot )?search should find no results$/, async function () {
+Then(/^(?:the )?search should find no results$/, async function () {
   let count = 0;
   let said = false;
   const ok = await poll(this, async () => {
@@ -154,14 +154,14 @@ Then(/^(?:the )?(?:HubSpot )?search should find no results$/, async function () 
  * Assert the search results do (or do not) include a result whose title
  * contains the text.
  *
- * Example #1: Then the HubSpot search results should include "Pricing"
+ * Example #1: Then the search results should include "Pricing"
  * Example #2: And the search results should include "5 tips for testing a HubSpot CMS site"
- * Example #3: Then the HubSpot search results should include "forms"
+ * Example #3: Then the search results should include "forms"
  * Example #4: But the search results should not include "Contact us"
  * Example #5: Then search results should not include "Checkout"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?search results should( not)* include "([^"]*)"$/, async function (notCase, text) {
+Then(/^(?:the )?search results should( not)* include "([^"]*)"$/, async function (notCase, text) {
   const titles = this.page.locator(RESULT_ITEMS).locator(RESULT_TITLES).filter({ hasText: literal(text) });
   let all = [];
   const ok = await poll(this, async () => {
@@ -181,14 +181,14 @@ Then(/^(?:the )?(?:HubSpot )?search results should( not)* include "([^"]*)"$/, a
 /**
  * Open a search result by its title.
  *
- * Example #1: When I open the HubSpot search result "Pricing"
+ * Example #1: When I open the search result "Pricing"
  * Example #2: And I open the search result "5 tips for testing a HubSpot CMS site"
- * Example #3: When we open the HubSpot search result "Contact us"
+ * Example #3: When we open the search result "Contact us"
  * Example #4: And open the search result "About Acme Analytics"
  * Example #5: When I open the search result "Pricing"
  *
  */
-When(/^(I |we )*open the (?:HubSpot )?search result "([^"]*)"$/, async function (pronounCase, title) {
+When(/^(I |we )*open the search result "([^"]*)"$/, async function (pronounCase, title) {
   const link = this.page.locator(RESULT_ITEMS).locator('a.hs-search-results__link').filter({ hasText: literal(title) }).first();
   await actOrExplain('open the search result', title, async () => {
     await link.waitFor({ state: 'visible', timeout: budget(this) });
