@@ -10,20 +10,20 @@ Feature: HubSpot menu and CTAs on a public site
   Scenario: The menu module has a submenu and marks the current page
     Given I am on "/ai-marketing-agency"
     Then the page should be a HubSpot page
-    And the HubSpot menu should have a link labeled "SERVICES"
-    And the HubSpot menu item "SERVICES" should have a submenu link "GOOGLE ADS MANAGEMENT"
-    And the HubSpot menu link "AI MARKETING" should be active
-    And the HubSpot menu link "GOOGLE ADS MANAGEMENT" should not be active
-    And the HubSpot menu link "GOOGLE ADS MANAGEMENT" should link to "/google-adwords-agency"
+    And the menu should have a link labeled "SERVICES"
+    And the menu item "SERVICES" should have a submenu link "GOOGLE ADS MANAGEMENT"
+    And the menu link "AI MARKETING" should be active
+    And the menu link "GOOGLE ADS MANAGEMENT" should not be active
+    And the menu link "GOOGLE ADS MANAGEMENT" should link to "/google-adwords-agency"
 
   Scenario: A submenu link is reached through its parent item
     Given I am on "/"
-    When I open the HubSpot menu item "SERVICES"
-    And I click the HubSpot menu link "AI MARKETING"
+    When I open the menu item "SERVICES"
+    And I click the menu link "AI MARKETING"
     Then I should be on "/ai-marketing-agency"
 
   Scenario: A CTA leads to its destination, not to the tracking redirect
     Given I am on "/"
-    Then the HubSpot CTA "GET PROPOSAL" should link to "/get-proposal"
-    When I click the HubSpot CTA "GET PROPOSAL"
+    Then the CTA "GET PROPOSAL" should link to "/get-proposal"
+    When I click the CTA "GET PROPOSAL"
     Then I should be on "/get-proposal"

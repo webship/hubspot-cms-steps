@@ -10,14 +10,14 @@ Feature: Contact form in an iframe
     Given I am on "/contact-iframe.html"
 
   Scenario: The form inside the iframe is found
-    Then the page should have a HubSpot form
-    And the HubSpot form should have a field "email"
-    And the HubSpot form field "email" should be required
+    Then the page should have a form
+    And the form should have a field "email"
+    And the form field "email" should be required
 
   Scenario: Submitting an empty form shows the validation errors
-    When I submit the HubSpot form
-    Then the HubSpot form field "lastname" should show an error
-    And the HubSpot form should show an error containing "Please complete all required fields."
+    When I submit the form
+    Then the form field "lastname" should show an error
+    And the form should show an error containing "Please complete all required fields."
 
   Scenario: Submitting the form inside the iframe shows a success message
     When we fill in the form field "firstname" with "Jane"

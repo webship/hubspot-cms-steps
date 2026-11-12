@@ -13,10 +13,10 @@ Feature: Pricing page
     And I should see "Simple, transparent pricing"
 
   Scenario: Every tier has a working CTA
-    Then the HubSpot CTA "Get Started" should link to "/contact-us.html"
-    And the HubSpot CTA "Start Free Trial" should link to "/contact-us.html"
-    And the HubSpot CTA "Talk to Sales" should link to "/contact-us.html"
+    Then the CTA "Get Started" should link to "/contact-us.html"
+    And the CTA "Start Free Trial" should link to "/contact-us.html"
+    And the CTA "Talk to Sales" should link to "/contact-us.html"
 
   Scenario: Clicking a pricing CTA goes to the contact page
-    When I click the HubSpot CTA "Start Free Trial"
+    When I click the CTA "Start Free Trial"
     Then I should be on "/contact-us.html"

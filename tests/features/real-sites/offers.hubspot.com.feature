@@ -9,7 +9,7 @@ Feature: HubSpot forms on a public sales page
 
   Scenario: The sales form has its fields and required markers
     Given I am on "/contact-sales"
-    Then the page should have a HubSpot form
-    And the HubSpot form should have a field "firstname"
-    And the HubSpot form should have a field "email"
-    And the HubSpot form field "email" should be required
+    Then the page should have a form
+    And the form should have a field "firstname"
+    And the form should have a field "email"
+    And the form field "email" should be required

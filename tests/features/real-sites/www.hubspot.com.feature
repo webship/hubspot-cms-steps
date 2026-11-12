@@ -8,8 +8,8 @@ Feature: HubSpot chat widget on a public site
   So that visitors can reach the team
 
   Scenario: The chat widget is added to the page
-    Given the HubSpot cookie consent is accepted
+    Given the cookie consent is accepted
     And I am on "/"
     Then the page should be a HubSpot page
-    And the HubSpot tracking code should be installed for portal "53"
-    And the HubSpot chat widget should be present
+    And the tracking code should be installed for portal "53"
+    And the chat widget should be present

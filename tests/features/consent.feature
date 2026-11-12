@@ -7,36 +7,36 @@ Feature: Cookie consent
 
   Scenario: Visitor can accept the cookie banner
     Given I am on "/index.html"
-    Then the HubSpot cookie banner should be visible
-    And the HubSpot cookie consent should not be saved
-    When I accept the HubSpot cookie banner
-    Then the HubSpot cookie banner should not be visible
-    And the HubSpot cookie consent should be accepted
-    And the HubSpot cookie consent should be saved
+    Then the cookie banner should be visible
+    And the cookie consent should not be saved
+    When I accept the cookie banner
+    Then the cookie banner should not be visible
+    And the cookie consent should be accepted
+    And the cookie consent should be saved
 
   Scenario: Visitor can decline the cookie banner
     Given I am on "/index.html"
-    Then the HubSpot cookie banner should be visible
-    When I decline the HubSpot cookie banner
-    Then the HubSpot cookie banner should not be visible
-    And the HubSpot cookie consent should be declined
-    And the HubSpot cookie consent should not be accepted
+    Then the cookie banner should be visible
+    When I decline the cookie banner
+    Then the cookie banner should not be visible
+    And the cookie consent should be declined
+    And the cookie consent should not be accepted
 
   Scenario: Visitor can dismiss the banner without choosing
     Given I am on "/pricing.html"
-    When I dismiss the HubSpot cookie banner
-    Then the HubSpot cookie banner should not be visible
-    And the HubSpot cookie consent should not be saved
+    When I dismiss the cookie banner
+    Then the cookie banner should not be visible
+    And the cookie consent should not be saved
 
   Scenario: The choice is kept on the next page
     Given I am on "/index.html"
-    When I accept the HubSpot cookie banner
-    And I click the HubSpot menu link "Pricing"
+    When I accept the cookie banner
+    And I click the menu link "Pricing"
     Then I should be on "/pricing.html"
-    And the HubSpot cookie banner should not be visible
+    And the cookie banner should not be visible
 
   Scenario: A scenario can start with the banner already answered
-    Given the HubSpot cookie consent is accepted
+    Given the cookie consent is accepted
     And I am on "/index.html"
-    Then the HubSpot cookie banner should not be visible
-    And the HubSpot cookie consent should be accepted
+    Then the cookie banner should not be visible
+    And the cookie consent should be accepted

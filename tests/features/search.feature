@@ -9,20 +9,20 @@ Feature: Site search
     Given I am on "/index.html"
 
   Scenario: The home page has a search field
-    Then the page should have a HubSpot site search
+    Then the page should have a site search
 
   Scenario: A search lists the matching pages and posts
-    When I search the HubSpot site for "testing"
+    When I search the site for "testing"
     Then I should be on "/hs-search-results"
-    And the HubSpot search results should list at least 3 results
-    And the HubSpot search results should include "5 tips for testing a HubSpot CMS site"
-    And the HubSpot search results should not include "Pricing"
+    And the search results should list at least 3 results
+    And the search results should include "5 tips for testing a HubSpot CMS site"
+    And the search results should not include "Pricing"
 
   Scenario: A result can be opened
-    When I search the HubSpot site for "pricing"
-    And I open the HubSpot search result "Pricing"
+    When I search the site for "pricing"
+    And I open the search result "Pricing"
     Then I should be on "/pricing.html"
 
   Scenario: A search with no match says so
-    When I search the HubSpot site for "zzzzqqq"
-    Then the HubSpot search should find no results
+    When I search the site for "zzzzqqq"
+    Then the search should find no results

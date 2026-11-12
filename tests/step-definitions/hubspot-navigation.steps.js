@@ -87,14 +87,14 @@ async function revealParents(link) {
  * Assert the menu does (or does not) have a link with the given label. The
  * label is the whole text of the link, as it is written in the menu settings.
  *
- * Example #1: Then the HubSpot menu should have a link labeled "Pricing"
- * Example #2: Then the HubSpot menu should have a link labeled "Blog"
+ * Example #1: Then the menu should have a link labeled "Pricing"
+ * Example #2: Then the menu should have a link labeled "Blog"
  * Example #3: And the menu should have a link labeled "Contact"
- * Example #4: But the HubSpot menu should not have a link labeled "Checkout"
+ * Example #4: But the menu should not have a link labeled "Checkout"
  * Example #5: Then menu should have a link labelled "Home"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?menu should( not)* have a link labell?ed "([^"]*)"$/, async function (notCase, label) {
+Then(/^(?:the )?menu should( not)* have a link labell?ed "([^"]*)"$/, async function (notCase, label) {
   const timeout = budget(this);
   try {
     await menuLink(this.page, label).first().waitFor({ state: notCase ? 'detached' : 'attached', timeout });
@@ -112,14 +112,14 @@ Then(/^(?:the )?(?:HubSpot )?menu should( not)* have a link labell?ed "([^"]*)"$
  * Assert a menu link does (or does not) lead to the given address, written as
  * a path ("/pricing") or a full address.
  *
- * Example #1: Then the HubSpot menu link "Pricing" should link to "/pricing"
+ * Example #1: Then the menu link "Pricing" should link to "/pricing"
  * Example #2: And the menu link "Blog" should link to "/blog"
- * Example #3: Then the HubSpot menu link "Contact" should link to "https://example.com/contact"
+ * Example #3: Then the menu link "Contact" should link to "https://example.com/contact"
  * Example #4: But the menu link "Home" should not link to "/pricing"
  * Example #5: Then menu link "About" should link to "/about-us"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?menu link "([^"]*)" should( not)* link to "([^"]*)"$/, async function (label, notCase, href) {
+Then(/^(?:the )?menu link "([^"]*)" should( not)* link to "([^"]*)"$/, async function (label, notCase, href) {
   const links = menuLink(this.page, label);
   let seen = [];
   const ok = await poll(this, async () => {
@@ -143,14 +143,14 @@ Then(/^(?:the )?(?:HubSpot )?menu link "([^"]*)" should( not)* link to "([^"]*)"
  * Assert a top-level menu item does (or does not) have a submenu link, in the
  * nested list HubSpot renders (`li.hs-item-has-children > ul`).
  *
- * Example #1: Then the HubSpot menu item "Services" should have a submenu link "Google Ads Management"
+ * Example #1: Then the menu item "Services" should have a submenu link "Google Ads Management"
  * Example #2: And the menu item "Resources" should have a submenu link "Blog"
- * Example #3: Then the HubSpot menu item "Industries" should have a submenu link "Ecommerce"
+ * Example #3: Then the menu item "Industries" should have a submenu link "Ecommerce"
  * Example #4: But the menu item "Pricing" should not have a submenu link "Blog"
  * Example #5: Then menu item "Resources" should have a submenu link "Guides"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?menu item "([^"]*)" should( not)* have a submenu link "([^"]*)"$/, async function (parent, notCase, child) {
+Then(/^(?:the )?menu item "([^"]*)" should( not)* have a submenu link "([^"]*)"$/, async function (parent, notCase, child) {
   const timeout = budget(this);
   const probe = ({ roots, parentText, childText }) => {
     const norm = (n) => (n.textContent || '').replace(/\s+/g, ' ').trim();
@@ -178,14 +178,14 @@ Then(/^(?:the )?(?:HubSpot )?menu item "([^"]*)" should( not)* have a submenu li
  * Open a menu item that has a submenu: hover over it (HubSpot's menu opens on
  * hover) and, when the submenu is still closed, click it.
  *
- * Example #1: When I open the HubSpot menu item "Services"
+ * Example #1: When I open the menu item "Services"
  * Example #2: And I open the menu item "Resources"
- * Example #3: When we open the HubSpot menu item "Industries"
+ * Example #3: When we open the menu item "Industries"
  * Example #4: And open the menu item "Resources"
  * Example #5: When I open the menu item "Services"
  *
  */
-When(/^(I |we )*open the (?:HubSpot )?menu item "([^"]*)"$/, async function (pronounCase, label) {
+When(/^(I |we )*open the menu item "([^"]*)"$/, async function (pronounCase, label) {
   const head = await poll(this, async () => firstVisible(menuLink(this.page, label)));
   if (!head) {
     throw friendly({ action: 'open the menu item', target: label, hint: MENU_HINT + ' The item must be visible: on a small screen, open the menu button first.' });
@@ -206,14 +206,14 @@ When(/^(I |we )*open the (?:HubSpot )?menu item "([^"]*)"$/, async function (pro
  * Click a menu link by its whole text. A link in a closed submenu is revealed
  * first by hovering over its parent items.
  *
- * Example #1: When I click the HubSpot menu link "Pricing"
+ * Example #1: When I click the menu link "Pricing"
  * Example #2: And I click the menu link "Contact"
- * Example #3: When we click the HubSpot menu link "Blog"
+ * Example #3: When we click the menu link "Blog"
  * Example #4: And click the menu link "Home"
  * Example #5: When I click the menu link "Google Ads Management"
  *
  */
-When(/^(I |we )*click the (?:HubSpot )?menu link "([^"]*)"$/, async function (pronounCase, label) {
+When(/^(I |we )*click the menu link "([^"]*)"$/, async function (pronounCase, label) {
   const links = menuLink(this.page, label);
   await actOrExplain('click the menu link', label, async () => {
     await links.first().waitFor({ state: 'attached', timeout: budget(this) });
@@ -233,14 +233,14 @@ When(/^(I |we )*click the (?:HubSpot )?menu link "([^"]*)"$/, async function (pr
  * `active` (HubSpot's menu module), its link has `aria-current="page"`, or the
  * theme's own active class.
  *
- * Example #1: Then the HubSpot menu link "Pricing" should be active
+ * Example #1: Then the menu link "Pricing" should be active
  * Example #2: And the menu link "Home" should be active
- * Example #3: Then the HubSpot menu link "Blog" should be active
+ * Example #3: Then the menu link "Blog" should be active
  * Example #4: But the menu link "Contact" should not be active
  * Example #5: Then menu link "About" should not be active
  *
  */
-Then(/^(?:the )?(?:HubSpot )?menu link "([^"]*)" should( not)* be active$/, async function (label, notCase) {
+Then(/^(?:the )?menu link "([^"]*)" should( not)* be active$/, async function (label, notCase) {
   const links = menuLink(this.page, label);
   let count = 0;
   const ok = await poll(this, async () => {
@@ -311,14 +311,14 @@ async function findCta(world, label, visible) {
  * redirect to the CTA's destination, and the step waits for the page to
  * settle.
  *
- * Example #1: When I click the HubSpot CTA "See Pricing"
- * Example #2: When I click the HubSpot CTA "Talk to Sales"
+ * Example #1: When I click the CTA "See Pricing"
+ * Example #2: When I click the CTA "Talk to Sales"
  * Example #3: And I click the CTA "Get Started"
- * Example #4: When we click the HubSpot CTA "Start Free Trial"
+ * Example #4: When we click the CTA "Start Free Trial"
  * Example #5: And click the CTA "Get in Touch"
  *
  */
-When(/^(I |we )*click the (?:HubSpot )?CTA "([^"]*)"$/, async function (pronounCase, label) {
+When(/^(I |we )*click the CTA "([^"]*)"$/, async function (pronounCase, label) {
   const cta = await findCta(this, label, true);
   if (!cta) {
     throw friendly({ action: 'click the CTA', target: label, hint: CTA_HINT });
@@ -330,14 +330,14 @@ When(/^(I |we )*click the (?:HubSpot )?CTA "([^"]*)"$/, async function (pronounC
 /**
  * Assert a CTA is (or is not) visible on the page.
  *
- * Example #1: Then the HubSpot CTA "Get Started" should be visible
+ * Example #1: Then the CTA "Get Started" should be visible
  * Example #2: And the CTA "Talk to Sales" should be visible
- * Example #3: Then the HubSpot CTA "Download the guide" should be visible
+ * Example #3: Then the CTA "Download the guide" should be visible
  * Example #4: But the CTA "Start Free Trial" should not be visible
  * Example #5: Then CTA "See Pricing" should be visible
  *
  */
-Then(/^(?:the )?(?:HubSpot )?CTA "([^"]*)" should( not)* be visible$/, async function (label, notCase) {
+Then(/^(?:the )?CTA "([^"]*)" should( not)* be visible$/, async function (label, notCase) {
   const cta = await findCta(this, label, true);
   if (notCase ? Boolean(cta) : !cta) {
     throw friendly({
@@ -353,14 +353,14 @@ Then(/^(?:the )?(?:HubSpot )?CTA "([^"]*)" should( not)* be visible$/, async fun
  * `cta_dest_link`; its `href` is HubSpot's tracking redirect, so it is only the
  * fallback.
  *
- * Example #1: Then the HubSpot CTA "See Pricing" should link to "/pricing"
- * Example #2: Then the HubSpot CTA "Talk to Sales" should link to "/contact-us"
+ * Example #1: Then the CTA "See Pricing" should link to "/pricing"
+ * Example #2: Then the CTA "Talk to Sales" should link to "/contact-us"
  * Example #3: And the CTA "Get Started" should link to "https://example.com/get-started"
- * Example #4: But the HubSpot CTA "Get in Touch" should not link to "/pricing"
+ * Example #4: But the CTA "Get in Touch" should not link to "/pricing"
  * Example #5: Then CTA "Start Free Trial" should link to "/contact-us"
  *
  */
-Then(/^(?:the )?(?:HubSpot )?CTA "([^"]*)" should( not)* link to "([^"]*)"$/, async function (label, notCase, href) {
+Then(/^(?:the )?CTA "([^"]*)" should( not)* link to "([^"]*)"$/, async function (label, notCase, href) {
   const cta = await findCta(this, label, false);
   if (!cta) {
     throw friendly({ action: 'find the CTA', target: label, hint: CTA_HINT });

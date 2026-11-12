@@ -40,7 +40,6 @@ module.exports = {
 
 ## How the steps are written
 
-- The product word is optional: "the HubSpot cookie banner" and "the cookie banner" both match.
 - Every assertion takes `should` or `should not`. Every action takes `I`, `we` or no pronoun.
 - Every assertion waits for its condition for the `minWaitTime.page` budget (at least 10 seconds) instead
   of reading the page once, and an action that changes the page settles the page before the next step.
@@ -61,11 +60,11 @@ and every item in it was found on real sites (see [What the selectors match on r
 | Step | Relies on |
 | --- | --- |
 | `the page should( not) be a HubSpot page` | `<meta name="generator" content="HubSpot">` |
-| `the page should( not) be a HubSpot website\|landing\|blog listing\|blog post page` | the body classes `hs-site-page`, `hs-landing-page`, `hs-blog-listing`, `hs-blog-post` |
-| `the HubSpot tracking code should( not) be installed( for portal "<id>")` | `script#hs-script-loader`, its address ends in `<portal id>.js` |
-| `the HubSpot chat widget should( not) be present\|visible` | `#hubspot-messages-iframe-container` |
-| `the page should( not) have a HubSpot meetings embed( for "<link>")` | `.meetings-iframe-container iframe` |
-| `the page should( not) have a HubSpot language switcher` | `.lang_switcher_class` |
+| `the page should( not) be a website\|landing\|blog listing\|blog post page` | the body classes `hs-site-page`, `hs-landing-page`, `hs-blog-listing`, `hs-blog-post` |
+| `the tracking code should( not) be installed( for portal "<id>")` | `script#hs-script-loader`, its address ends in `<portal id>.js` |
+| `the chat widget should( not) be present\|visible` | `#hubspot-messages-iframe-container` |
+| `the page should( not) have a meetings embed( for "<link>")` | `.meetings-iframe-container iframe` |
+| `the page should( not) have a language switcher` | `.lang_switcher_class` |
 | `the page should( not) be available in the language "<code>"` | `link[rel="alternate"][hreflang]` |
 | `I switch the language to "<code>"` | the switcher's link, else the language alternate |
 | `the page should have the canonical address "<address>"` | `link[rel="canonical"]` |
@@ -75,24 +74,24 @@ and every item in it was found on real sites (see [What the selectors match on r
 
 | Step | Relies on |
 | --- | --- |
-| `I accept\|decline\|dismiss the HubSpot cookie banner` | `#hs-eu-confirmation-button`, `#hs-eu-decline-button`, `#hs-eu-close-button` |
-| `the HubSpot cookie banner should( not) be visible` / `I should( not) see the HubSpot cookie banner` | `#hs-eu-cookie-confirmation` (inside `#hs-banner-parent`); it stays in the page, hidden, after an answer |
-| `the HubSpot cookie consent should( not) be accepted\|declined\|saved` | the cookie `__hs_cookie_cat_pref` (`1:true_2:true_3:true`, `1:false_2:false_3:false`) |
-| `the HubSpot cookie consent is accepted\|declined` (Given) | sets that cookie, so a scenario can start without the banner |
+| `I accept\|decline\|dismiss the cookie banner` | `#hs-eu-confirmation-button`, `#hs-eu-decline-button`, `#hs-eu-close-button` |
+| `the cookie banner should( not) be visible` / `I should( not) see the cookie banner` | `#hs-eu-cookie-confirmation` (inside `#hs-banner-parent`); it stays in the page, hidden, after an answer |
+| `the cookie consent should( not) be accepted\|declined\|saved` | the cookie `__hs_cookie_cat_pref` (`1:true_2:true_3:true`, `1:false_2:false_3:false`) |
+| `the cookie consent is accepted\|declined` (Given) | sets that cookie, so a scenario can start without the banner |
 
 ### Forms
 
 | Step | Relies on |
 | --- | --- |
-| `the page should( not) have a HubSpot form` | `form.hs-form`, or `[data-hsfc-id="Renderer"]` (new forms editor), in the page or in an iframe |
-| `the HubSpot form should( not) have a field "<name>"` | the input `name` (`email`; `0-1/email` in the new editor), its label or its placeholder |
-| `I fill in the HubSpot form field "<name>" with "<value>"` | the same; a select takes the option text or value |
-| `I tick\|untick the HubSpot form checkbox "<name or label>"` | the same |
-| `I submit the HubSpot form` | `div.hs_submit input[type=submit].hs-button` (new editor: `.hsfc-Button`) |
-| `the HubSpot form field "<name>" should( not) be required` | `required`, or the marker `span.hs-form-required` |
-| `the HubSpot form field "<name>" should( not) show an error( containing "<text>")` | `ul.hs-error-msgs[role=alert]` after the field, `input.invalid.error` |
-| `the HubSpot form should( not) show an error( containing "<text>")` | `.hs-error-msgs` (one per field and one for the whole form) |
-| `the HubSpot form should( not) show a success message( containing "<text>")` | `div.submitted-message` |
+| `the page should( not) have a form` | `form.hs-form`, or `[data-hsfc-id="Renderer"]` (new forms editor), in the page or in an iframe |
+| `the form should( not) have a field "<name>"` | the input `name` (`email`; `0-1/email` in the new editor), its label or its placeholder |
+| `I fill in the form field "<name>" with "<value>"` | the same; a select takes the option text or value |
+| `I tick\|untick the form checkbox "<name or label>"` | the same |
+| `I submit the form` | `div.hs_submit input[type=submit].hs-button` (new editor: `.hsfc-Button`) |
+| `the form field "<name>" should( not) be required` | `required`, or the marker `span.hs-form-required` |
+| `the form field "<name>" should( not) show an error( containing "<text>")` | `ul.hs-error-msgs[role=alert]` after the field, `input.invalid.error` |
+| `the form should( not) show an error( containing "<text>")` | `.hs-error-msgs` (one per field and one for the whole form) |
+| `the form should( not) show a success message( containing "<text>")` | `div.submitted-message` |
 
 HubSpot renders a form in one of three ways, and the form steps find it in all three: raw HTML in the page
 (`form.hs-form`, for example the CMS form module), an iframe (`iframe.hs-form-iframe`, the default for a form
@@ -105,15 +104,15 @@ submitted and checked. A form set to redirect leaves the page after the submit; 
 
 | Step | Relies on |
 | --- | --- |
-| `the HubSpot menu should( not) have a link labeled "<label>"` | `.hs-menu-wrapper a`, or a theme's `nav a` |
-| `the HubSpot menu link "<label>" should( not) link to "<address>"` | the link's `href` |
-| `the HubSpot menu item "<label>" should( not) have a submenu link "<label>"` | `li.hs-item-has-children > ul.hs-menu-children-wrapper` |
-| `I open the HubSpot menu item "<label>"` | hover, then click, on the item |
-| `I click the HubSpot menu link "<label>"` | the visible copy of the link (a page carries the menu twice) |
-| `the HubSpot menu link "<label>" should( not) be active` | `li.active`, or `aria-current="page"` |
-| `I click the HubSpot CTA "<label>"` | `.hs-cta-wrapper a.cta_button`, `.hs-cta-embed a`, found by text, `title`, `aria-label` or image `alt` |
-| `the HubSpot CTA "<label>" should( not) be visible` | the same |
-| `the HubSpot CTA "<label>" should( not) link to "<address>"` | the `cta_dest_link` attribute (the `href` is HubSpot's tracking redirect, `/cs/c/?cta_guid=...`) |
+| `the menu should( not) have a link labeled "<label>"` | `.hs-menu-wrapper a`, or a theme's `nav a` |
+| `the menu link "<label>" should( not) link to "<address>"` | the link's `href` |
+| `the menu item "<label>" should( not) have a submenu link "<label>"` | `li.hs-item-has-children > ul.hs-menu-children-wrapper` |
+| `I open the menu item "<label>"` | hover, then click, on the item |
+| `I click the menu link "<label>"` | the visible copy of the link (a page carries the menu twice) |
+| `the menu link "<label>" should( not) be active` | `li.active`, or `aria-current="page"` |
+| `I click the CTA "<label>"` | `.hs-cta-wrapper a.cta_button`, `.hs-cta-embed a`, found by text, `title`, `aria-label` or image `alt` |
+| `the CTA "<label>" should( not) be visible` | the same |
+| `the CTA "<label>" should( not) link to "<address>"` | the `cta_dest_link` attribute (the `href` is HubSpot's tracking redirect, `/cs/c/?cta_guid=...`) |
 
 An address is a path (`/pricing`, which matches the same path on the current site) or a full address.
 
@@ -121,16 +120,16 @@ An address is a path (`/pricing`, which matches the same path on the current sit
 
 | Step | Relies on |
 | --- | --- |
-| `the HubSpot blog should list at least <n> post(s)` | links to posts: one path segment under the blog path |
-| `I open the HubSpot blog post titled "<title>"` | the text, `aria-label`, `title` or image `alt` of that link |
-| `I go to page <n> of the HubSpot blog` / `the HubSpot blog should( not) have pagination` | `/<blog>/page/<n>` |
-| `the HubSpot blog( post) should( not) have the tag / be tagged "<tag>"` / `I open the HubSpot blog tag "<tag>"` | `/<blog>/tag/<tag>`; a post count after the tag ("API (3)") is ignored |
-| `the HubSpot blog( post) should( not) be written by "<author>"` | `/<blog>/author/<author>` |
-| `the page should( not) have a HubSpot site search` | `input.hs-search-field__input`, or `input[type=search]` |
-| `I search the HubSpot site for "<term>"` | the same, opened first when the theme hides it behind a search button; Enter |
-| `the HubSpot search results should list at least <n> result(s)` / `should( not) include "<title>"` | `/hs-search-results`: `li.hs-search-results__listing__item`, `.hs-search-results__title` |
-| `the HubSpot search should find no results` | the results page says "no results" and lists none |
-| `I open the HubSpot search result "<title>"` | `a.hs-search-results__link` |
+| `the blog should list at least <n> post(s)` | links to posts: one path segment under the blog path |
+| `I open the blog post titled "<title>"` | the text, `aria-label`, `title` or image `alt` of that link |
+| `I go to page <n> of the blog` / `the blog should( not) have pagination` | `/<blog>/page/<n>` |
+| `the blog( post) should( not) have the tag / be tagged "<tag>"` / `I open the blog tag "<tag>"` | `/<blog>/tag/<tag>`; a post count after the tag ("API (3)") is ignored |
+| `the blog( post) should( not) be written by "<author>"` | `/<blog>/author/<author>` |
+| `the page should( not) have a site search` | `input.hs-search-field__input`, or `input[type=search]` |
+| `I search the site for "<term>"` | the same, opened first when the theme hides it behind a search button; Enter |
+| `the search results should list at least <n> result(s)` / `should( not) include "<title>"` | `/hs-search-results`: `li.hs-search-results__listing__item`, `.hs-search-results__title` |
+| `the search should find no results` | the results page says "no results" and lists none |
+| `I open the search result "<title>"` | `a.hs-search-results__link` |
 
 HubSpot does not fix the markup of a blog listing (four public sites checked, four different structures). It
 does fix the body classes and the URLs, so the blog steps work on links and work on any theme.

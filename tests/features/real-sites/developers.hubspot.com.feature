@@ -9,10 +9,10 @@ Feature: HubSpot blog tags on a public site
 
   Scenario: A tag is found and opened
     Given I am on "/blog"
-    Then the page should be a HubSpot blog listing page
-    And the HubSpot blog should have the tag "API"
-    And the HubSpot blog should not have the tag "No such tag"
-    When I open the HubSpot blog tag "API"
+    Then the page should be a blog listing page
+    And the blog should have the tag "API"
+    And the blog should not have the tag "No such tag"
+    When I open the blog tag "API"
     Then I should be on "/blog/tag/api"
-    And the page should be a HubSpot blog listing page
-    And the HubSpot blog should list at least 1 post
+    And the page should be a blog listing page
+    And the blog should list at least 1 post
