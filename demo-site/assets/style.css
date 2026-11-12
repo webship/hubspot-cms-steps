@@ -103,3 +103,8 @@ main { padding: 32px; max-width: 960px; margin: 0 auto; }
 .hs-menu-wrapper li:hover > .hs-menu-children-wrapper, .hs-menu-wrapper li:focus-within > .hs-menu-children-wrapper { display: flex; }
 .hs-menu-wrapper.hs-menu-mobile { display: none; }
 .hs-cta-embed { margin: 12px 0; }
+.blog-item { margin: 0 0 24px; }
+.post-tags { list-style: none; display: flex; gap: 8px; padding: 0; }
+.pagination { list-style: none; display: flex; gap: 12px; padding: 0; }
+.hs-search-field { margin-left: 16px; }
+.hs-search-results__listing { list-style: none; padding: 0; }

@@ -19,6 +19,9 @@ const { budget, literal, actOrExplain } = require('./hubspot-helpers');
 // The other step files.
 require('./hubspot-forms.steps');
 require('./hubspot-navigation.steps');
+require('./hubspot-site.steps');
+require('./hubspot-blog.steps');
+require('./hubspot-search.steps');
 
 const COOKIE_BANNER = '#hs-eu-cookie-confirmation';
 const COOKIE_ACCEPT = '#hs-eu-confirmation-button';
@@ -127,50 +130,4 @@ Then(/^(?:(?:the )?(?:HubSpot )?cookie banner should( not)* be visible|(?:I |we 
     hint: COOKIE_HINT,
     timeout: budget(this),
   });
-});
-
-/**
- * Assert the HubSpot blog listing module shows at least N posts. The count
- * is polled for the wait budget, so a listing that is still rendering is
- * waited for.
- *
- * Example #1: Then the HubSpot blog should list at least 1 post
- * Example #2: Then the HubSpot blog should list at least 3 posts
- * Example #3: And the blog should list at least 2 posts
- * Example #4: Then blog should list at least 3 posts
- * Example #5: Then the HubSpot blog should list at least 1 posts
- *
- */
-Then(/^(?:the )?(?:HubSpot )?blog should list at least (\d+) posts?$/, async function (minimumStr) {
-  const minimum = Number(minimumStr);
-  const selector = '.hs-blog-post-listing .hs-blog-post';
-  const timeout = budget(this);
-  try {
-    await this.page.waitForFunction(({ sel, n }) => document.querySelectorAll(sel).length >= n, { sel: selector, n: minimum }, { timeout });
-  } catch {
-    const count = await this.page.locator(selector).count();
-    throw friendly({
-      message: `Expected at least ${minimum} blog post(s) in the listing, found ${count}.`,
-      hint: 'The blog listing module renders `.hs-blog-post` items inside `.hs-blog-post-listing`; check the listing page URL and that enough posts are published.',
-    });
-  }
-});
-
-/**
- * Open a HubSpot blog post from the listing page by its title.
- *
- * Example #1: When I open the HubSpot blog post titled "Why BDD testing matters for marketing sites"
- * Example #2: When I open the HubSpot blog post titled "5 tips for testing a HubSpot CMS site"
- * Example #3: And I open the blog post titled "Automating website QA with webship-js"
- * Example #4: When we open the HubSpot blog post titled "5 tips for testing a HubSpot CMS site"
- * Example #5: And open the blog post titled "Why BDD testing matters for marketing sites"
- *
- */
-When(/^(I |we )*open the (?:HubSpot )?blog post titled "([^"]*)?"$/, async function (pronounCase, title) {
-  const locator = this.page.locator('.hs-blog-post-listing .hs-blog-post a', { hasText: title }).first();
-  await actOrExplain('open the blog post', title, async () => {
-    await locator.waitFor({ state: 'visible', timeout: budget(this) });
-    await locator.click();
-  }, 'Blog post links are matched by their visible title inside the listing (`.hs-blog-post a`); open the blog listing page first and check the title text.');
-  await smartSettle(this.page, (this.minWaitTime && this.minWaitTime.page) || 3000);
 });

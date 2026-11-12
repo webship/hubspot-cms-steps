@@ -92,8 +92,16 @@ npm test
 | `I open the (HubSpot )menu item "<label>"` | When |
 | `I click the (HubSpot )menu link "<label>"` | When |
 | `the (HubSpot )menu link "<label>" should( not) be active` | Then |
+| `the page should( not) be a HubSpot (website\|landing\|blog listing\|blog post) page` | Then |
 | `the (HubSpot )blog should list at least <n> post(s)` | Then |
 | `I open the (HubSpot )blog post titled "<title>"` | When |
+| `I go to page <n> of the (HubSpot )blog` / `the (HubSpot )blog should( not) have pagination` | When / Then |
+| `the (HubSpot )blog( post) should( not) have the tag / be tagged "<tag>"` / `I open the (HubSpot )blog tag "<tag>"` | Then / When |
+| `the (HubSpot )blog( post) should( not) be written by "<author>"` | Then |
+| `the page should( not) have a (HubSpot )site search` | Then |
+| `I search the (HubSpot )site for "<term>"` | When |
+| `the (HubSpot )search results should list at least <n> result(s)` / `should( not) include "<title>"` / `the (HubSpot )search should find no results` | Then |
+| `I open the (HubSpot )search result "<title>"` | When |
 
 The product word is optional ("the HubSpot cookie banner" and "the cookie
 banner" both match), so a feature written for another pack reads here too.
@@ -138,6 +146,21 @@ image CTA has no text), in `.hs-cta-wrapper`, `.hs-cta-embed` or as `a.cta_butto
 `href` of a CTA is HubSpot's tracking redirect (`/cs/c/?cta_guid=...`), so its
 destination is read from the `cta_dest_link` attribute; "should link to" takes a path
 (`/pricing`, the same site) or a full address.
+
+## Blogs and search
+
+HubSpot does not fix the markup of a blog listing: the theme decides (four public sites
+checked, four different structures). What it fixes is the body class (`hs-blog-listing`,
+`hs-blog-post`, `hs-site-page`, `hs-landing-page`) and the URLs: `/<blog>/<post>`,
+`/<blog>/page/<n>`, `/<blog>/tag/<tag>`, `/<blog>/author/<author>`. So the blog steps work
+on links: a post is a link to one path segment under the blog path, outside the header,
+footer and menu, and it is opened by the text, `aria-label`, `title` or image `alt` of its
+link. A tag is matched by its text, and a post count after it ("API (3)") is ignored.
+
+The search steps use the default search markup: the field `input.hs-search-field__input`
+(opened first when the theme hides it behind a search button) and the results page
+`/hs-search-results` with `li.hs-search-results__listing__item` and
+`.hs-search-results__title`.
 
 ## Checking a real site
 

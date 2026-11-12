@@ -218,10 +218,12 @@ function rememberForm(world, field) {
  * label of a menu link or a CTA as a person reads it).
  *
  * @param {string} text
+ * @param {boolean} [allowCount]  Also accept a trailing post count, as in "API (3)".
  * @returns {RegExp}
  */
-function exactText(text) {
-  return new RegExp(`^\\s*${escapeRegExp(String(text).trim()).replace(/\s+/g, '\\s+')}\\s*$`);
+function exactText(text, allowCount = false) {
+  const count = allowCount ? '(?:\\s*\\(\\d+\\))?' : '';
+  return new RegExp(`^\\s*${escapeRegExp(String(text).trim()).replace(/\s+/g, '\\s+')}${count}\\s*$`);
 }
 
 /**
