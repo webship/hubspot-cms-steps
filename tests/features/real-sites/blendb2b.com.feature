@@ -9,7 +9,7 @@ Feature: HubSpot blog and search on a public site
 
   Scenario: A blog listing is recognised and its posts are counted
     Given I am on "/blog"
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And the page should be a blog listing page
     And the page should not be a blog post page
     And the blog should list at least 3 posts

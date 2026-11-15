@@ -10,6 +10,6 @@ Feature: HubSpot chat widget on a public site
   Scenario: The chat widget is added to the page
     Given the cookie consent is accepted
     And I am on "/"
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And the tracking code should be installed for portal "53"
     And the chat widget should be present

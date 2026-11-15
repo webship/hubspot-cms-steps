@@ -9,7 +9,7 @@ Feature: Contact Us page
     Given I am on "/contact-us.html"
 
   Scenario: Contact page is served by HubSpot
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And I should see "Contact us"
     And the page should have a form
 

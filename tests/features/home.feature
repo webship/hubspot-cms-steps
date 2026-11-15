@@ -9,7 +9,7 @@ Feature: Home page
     Given I am on "/index.html"
 
   Scenario: Home page is served by HubSpot
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And I should see "Turn website visitors into customers"
 
   Scenario: Home page menu links to every main page

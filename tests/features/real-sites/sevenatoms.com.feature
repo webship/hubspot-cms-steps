@@ -9,7 +9,7 @@ Feature: HubSpot menu and CTAs on a public site
 
   Scenario: The menu module has a submenu and marks the current page
     Given I am on "/ai-marketing-agency"
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And the menu should have a link labeled "SERVICES"
     And the menu item "SERVICES" should have a submenu link "GOOGLE ADS MANAGEMENT"
     And the menu link "AI MARKETING" should be active

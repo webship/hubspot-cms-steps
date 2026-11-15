@@ -9,7 +9,7 @@ Feature: About Us page
     Given I am on "/about-us.html"
 
   Scenario: About page is served by HubSpot
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And I should see "About Acme Analytics"
 
   Scenario: About page CTA goes to the contact page

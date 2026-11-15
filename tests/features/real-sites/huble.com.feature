@@ -13,7 +13,7 @@ Feature: HubSpot steps on a public site
 
   Scenario: A raw HTML form shows its validation errors when it is submitted empty
     Given I am on "/contact-us"
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And the page should have a form
     And the form should have a field "email"
     And the form should have a field "firstname"
