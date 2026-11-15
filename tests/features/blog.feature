@@ -9,7 +9,7 @@ Feature: Blog
     Given I am on "/blog/"
 
   Scenario: Blog listing is served by HubSpot
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And the page should be a blog listing page
     And the page should not be a blog post page
     And the blog should list at least 3 posts

@@ -59,7 +59,7 @@ and every item in it was found on real sites (see [What the selectors match on r
 
 | Step | Relies on |
 | --- | --- |
-| `the page should( not) be a HubSpot page` | `<meta name="generator" content="HubSpot">` |
+| `the page generator should( not) (be\|start with\|contain) "HubSpot"` | `<meta name="generator" content="HubSpot">`; the name is a value of the step |
 | `the page should( not) be a website\|landing\|blog listing\|blog post page` | the body classes `hs-site-page`, `hs-landing-page`, `hs-blog-listing`, `hs-blog-post` |
 | `the tracking code should( not) be installed( for portal "<id>")` | `script#hs-script-loader`, its address ends in `<portal id>.js` |
 | `the chat widget should( not) be present\|visible` | `#hubspot-messages-iframe-container` |

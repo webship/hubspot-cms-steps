@@ -9,7 +9,7 @@ Feature: Pricing page
     Given I am on "/pricing.html"
 
   Scenario: Pricing page is served by HubSpot
-    Then the page should be a HubSpot page
+    Then the page generator should be "HubSpot"
     And I should see "Simple, transparent pricing"
 
   Scenario: Every tier has a working CTA
