@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/webship/hubspot-cms-steps/2.0.x/assets/logo.svg" alt="HubSpot logo" width="96"></p>
+
 # hubspot-cms-steps
 
 A [webship-js](https://webship.co/docs/webship-js/2.0.x) (Playwright + Cucumber-js) step pack for
@@ -227,3 +229,7 @@ MIT. See [LICENSE](LICENSE).
 - `FEATURES=tests/features/a.feature,tests/features/b.feature npm test` runs a subset of the feature files; `CUCUMBER_TAGS=@critical npm test` runs a tag lane (the default run leaves `@wip`, `@auth-setup` and the read-only `@real-site` checks out).
 - `cucumber.js` carries the `video` block (`WEBSHIP_VIDEO=on-failure` records the browser) and the `javascript` block (`WEBSHIP_JS_ERROR_MODE=fail` fails a scenario on a JavaScript error; `@js-off` silences one scenario) that webship-js reads.
 - The step timeout is webship-js's own (45 seconds, set when it loads); `WEBSHIP_STEP_TIMEOUT=<milliseconds>` changes it, a `timeout` key in `cucumber.js` does not.
+
+## Logo
+
+The HubSpot logo in this README comes from Simple Icons 16.37.0 (CC0-1.0), filled with the colour the set lists for the brand. The HubSpot name and logo are trademarks of their owner; this pack is not affiliated with or endorsed by them.
