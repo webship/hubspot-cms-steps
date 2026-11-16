@@ -5,6 +5,14 @@ on:
     branches: ['2.0.x']
   pull_request:
     branches: ['2.0.x']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   FORCE_COLOR: 1
@@ -12,6 +20,7 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -47,3 +56,6 @@ jobs:
           path: |
             tests/reports/
             screenshots/
+            videos/
+          retention-days: 14
+          if-no-files-found: ignore
