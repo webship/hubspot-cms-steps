@@ -84,7 +84,7 @@ Then(/^(?:the |this )?page should( not)* have a site search$/, async function (n
  *
  * Example #1: When I search the site for "pricing"
  * Example #2: And I search the site for "forms"
- * Example #3: When we search the site for "HubSpot"
+ * Example #3: When we search the site for "testing"
  * Example #4: And search the site for "webship-js"
  * Example #5: When I search the site for "zzzzqqq"
  *
@@ -155,7 +155,7 @@ Then(/^(?:the )?search should find no results$/, async function () {
  * contains the text.
  *
  * Example #1: Then the search results should include "Pricing"
- * Example #2: And the search results should include "5 tips for testing a HubSpot CMS site"
+ * Example #2: And the search results should include "5 tips for testing a marketing site"
  * Example #3: Then the search results should include "forms"
  * Example #4: But the search results should not include "Contact us"
  * Example #5: Then search results should not include "Checkout"
@@ -182,7 +182,7 @@ Then(/^(?:the )?search results should( not)* include "([^"]*)"$/, async function
  * Open a search result by its title.
  *
  * Example #1: When I open the search result "Pricing"
- * Example #2: And I open the search result "5 tips for testing a HubSpot CMS site"
+ * Example #2: And I open the search result "5 tips for testing a marketing site"
  * Example #3: When we open the search result "Contact us"
  * Example #4: And open the search result "About Acme Analytics"
  * Example #5: When I open the search result "Pricing"

@@ -18,7 +18,7 @@ Feature: About Us page
 
   Scenario: A CTA made of an image is found by its alternative text
     Then the CTA "Download the guide" should be visible
-    And the CTA "Download the guide" should link to "/blog/hubspot-cms-tips.html"
+    And the CTA "Download the guide" should link to "/blog/site-testing-tips.html"
 
   Scenario: The new CTA embed is found as well
     Then the CTA "Read the blog" should link to "/blog/"

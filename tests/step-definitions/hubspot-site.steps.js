@@ -73,7 +73,7 @@ Then(/^(?:the |this )?page should( not)* be a (website|landing|blog listing|blog
  * Example #1: Then the page generator should be "HubSpot"
  * Example #2: And the page generator should contain "HubSpot"
  * Example #3: Then the page generator should start with "Hub"
- * Example #4: But the page generator should not be "WordPress"
+ * Example #4: But the page generator should not be "Another Site Builder"
  * Example #5: Then page generator should be "HubSpot"
  *
  */
