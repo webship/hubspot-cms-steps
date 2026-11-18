@@ -29,10 +29,10 @@ Feature: HubSpot blog and search on a public site
 
   Scenario: The default search results list the matches
     Given I am on "/"
-    When I search the site for "hubspot"
+    When I search the site for "ABM"
     Then I should be on "/hs-search-results"
     And the search results should list at least 5 results
-    And the search results should include "HubSpot"
+    And the search results should include "ABM"
 
   Scenario: A search with no match says so
     Given I am on "/"
