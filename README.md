@@ -104,7 +104,10 @@ A green first run prints every step, then the summary (the starter feature of
 it wrote:
 
 ```
-FIRSTRUN
+3 scenarios (3 passed)
+10 steps (10 passed)
+0m03.819s (executing steps: 0m03.785s)
+[webship-js] HTML report → …/hubspot-tests/tests/reports/cucumber_report.html
 ```
 
 From there, copy the features of [`tests/features/`](tests/features/) (they
