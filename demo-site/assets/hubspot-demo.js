@@ -125,10 +125,10 @@
     { title: 'Pricing', url: '/pricing.html', text: 'Simple, transparent pricing for every team.' },
     { title: 'About Acme Analytics', url: '/about-us.html', text: 'Learn about the company and its team.' },
     { title: 'Contact us', url: '/contact-us.html', text: 'Tell us a bit about yourself and we will be in touch.' },
-    { title: 'Testing a multilingual HubSpot site', url: '/blog/multilingual-hubspot-sites.html', text: 'Language switchers and translated pages need their own scenarios.' },
-    { title: 'Testing HubSpot forms without sending them', url: '/blog/testing-hubspot-forms.html', text: 'Validation errors can be tested without sending a single submission.' },
+    { title: 'Testing a multilingual site', url: '/blog/multilingual-sites.html', text: 'Language switchers and translated pages need their own scenarios.' },
+    { title: 'Testing forms without sending them', url: '/blog/testing-forms.html', text: 'Validation errors can be tested without sending a single submission.' },
     { title: 'Automating website QA with webship-js', url: '/blog/automating-website-qa.html', text: 'How we replaced manual click-throughs with Cucumber scenarios.' },
-    { title: '5 tips for testing a HubSpot CMS site', url: '/blog/hubspot-cms-tips.html', text: 'Forms, CTAs, and cookie banners each need their own testing strategy.' },
+    { title: '5 tips for testing a marketing site', url: '/blog/site-testing-tips.html', text: 'Forms, CTAs, and cookie banners each need their own testing strategy.' },
     { title: 'Why BDD testing matters for marketing sites', url: '/blog/why-bdd-testing-matters.html', text: 'Gherkin scenarios keep your landing pages honest as they change.' }
   ];
 

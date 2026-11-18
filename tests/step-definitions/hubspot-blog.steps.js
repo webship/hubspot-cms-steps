@@ -89,9 +89,9 @@ Then(/^(?:the )?blog should list at least (\d+) posts?$/, async function (minimu
  * or image alt of its link.
  *
  * Example #1: When I open the blog post titled "Why BDD testing matters for marketing sites"
- * Example #2: When I open the blog post titled "5 tips for testing a HubSpot CMS site"
+ * Example #2: When I open the blog post titled "5 tips for testing a marketing site"
  * Example #3: And I open the blog post titled "Automating website QA with webship-js"
- * Example #4: When we open the blog post titled "5 tips for testing a HubSpot CMS site"
+ * Example #4: When we open the blog post titled "5 tips for testing a marketing site"
  * Example #5: And open the blog post titled "Why BDD testing matters for marketing sites"
  *
  */
@@ -158,7 +158,7 @@ Then(/^(?:the )?blog should( not)* have pagination$/, async function (notCase) {
  * post.
  *
  * Example #1: Then the blog should have the tag "Testing"
- * Example #2: And the blog should have the tag "HubSpot"
+ * Example #2: And the blog should have the tag "Websites"
  * Example #3: Then the blog post should be tagged "Testing"
  * Example #4: But the blog post should not be tagged "Marketing"
  * Example #5: Then blog should not have the tag "Finance"
@@ -179,7 +179,7 @@ Then(/^(?:the )?blog(?: post)? should( not)* (?:have the tag|be tagged) "([^"]*)
  * Open a tag's listing from a blog page, through its link.
  *
  * Example #1: When I open the blog tag "Testing"
- * Example #2: And I open the blog tag "HubSpot"
+ * Example #2: And I open the blog tag "Websites"
  * Example #3: When we open the blog tag "Automation"
  * Example #4: And open the blog tag "Marketing"
  * Example #5: When I open the blog tag "Testing"

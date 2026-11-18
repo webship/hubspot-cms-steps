@@ -15,7 +15,7 @@ Feature: Site search
     When I search the site for "testing"
     Then I should be on "/hs-search-results"
     And the search results should list at least 3 results
-    And the search results should include "5 tips for testing a HubSpot CMS site"
+    And the search results should include "5 tips for testing a marketing site"
     And the search results should not include "Pricing"
 
   Scenario: A result can be opened
