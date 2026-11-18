@@ -10,7 +10,9 @@ Feature: Home page
 
   Scenario: Home page is served by HubSpot
     Then the page generator should be "HubSpot"
+    And the page generator should not be "Another Site Builder"
     And I should see "Turn website visitors into customers"
+    And the page should not have a form
 
   Scenario: Home page menu links to every main page
     Then the menu should have a link labeled "Home"
@@ -22,6 +24,7 @@ Feature: Home page
 
   Scenario: Menu links lead to the right pages and the current page is marked
     Then the menu link "Pricing" should link to "/pricing.html"
+    And the menu link "Pricing" should not link to "/about-us.html"
     And the menu link "Contact" should link to "/contact-us.html"
     And the menu link "Home" should be active
     And the menu link "Pricing" should not be active

@@ -11,6 +11,7 @@ Feature: About Us page
   Scenario: About page is served by HubSpot
     Then the page generator should be "HubSpot"
     And I should see "About Acme Analytics"
+    And the page should not have a site search
 
   Scenario: About page CTA goes to the contact page
     When I click the CTA "Get in Touch"

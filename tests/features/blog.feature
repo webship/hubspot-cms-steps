@@ -19,6 +19,7 @@ Feature: Blog
     Then the page should be a blog post page
     And I should see "Testing forms without sending them"
     And the blog post should be written by "Jane Doe"
+    And the blog post should not be written by "John Roe"
     And the blog post should be tagged "Testing"
     And the blog post should not be tagged "Marketing"
 
@@ -36,6 +37,7 @@ Feature: Blog
     When I open the blog tag "Automation"
     Then I should be on "/blog/tag/automation/"
     And the blog should list at least 1 post
+    And the blog should not have pagination
     And I should see "Automating website QA with webship-js"
     And I should not see "Why BDD testing matters for marketing sites"
 
