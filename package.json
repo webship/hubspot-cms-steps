@@ -5,6 +5,7 @@
   "main": "tests/step-definitions/hubspot.steps.js",
   "files": [
     "tests/step-definitions/*.js",
+    "tests/features/*.feature",
     "scripts/probe-selectors.js",
     "README.md",
     "LICENSE"

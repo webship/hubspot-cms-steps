@@ -14,6 +14,132 @@ suite of `.feature` files that runs against it in CI without a HubSpot account. 
 steps were checked on public sites built on HubSpot CMS; the counts are in
 [`docs/real-sites.md`](docs/real-sites.md).
 
+## From nothing to a green run
+
+What the machine needs: git, Node.js 20 or later with npm, and
+[DDEV](https://ddev.com/get-started/) for the demo site (or no container at all:
+`npx http-server` serves the same pages).
+
+**1. The site.** The demo site of this repository: static pages that copy the
+markup HubSpot CMS renders (site, landing and blog pages, the cookie banner,
+forms in the page, in an iframe and in the new editor's frame, menus and CTAs,
+a blog with tags, authors and pages, the site search, a second language).
+Start it with DDEV:
+
+```bash
+git clone https://github.com/webship/hubspot-cms-steps.git
+cd hubspot-cms-steps
+ddev start
+```
+
+The site answers at `https://hubspot-cms-steps.ddev.site`. Without DDEV,
+`npx http-server demo-site -p 8090 -s` serves it at `http://localhost:8090`;
+leave it running in its own terminal.
+
+**2. A test project**, in another folder:
+
+```bash
+mkdir hubspot-tests && cd hubspot-tests
+npm init -y
+npm install --save-dev webship-js @webship-js/hubspot-cms-steps
+npx init-webship-js
+```
+
+`npx init-webship-js` writes `cucumber.js`, `playwright.config.ts`, the
+`tests/` folders with a first feature and the `npm test` scripts, and installs
+Chromium. npm usually runs it already when it installs webship-js; a second run
+changes nothing.
+
+**3. `cucumber.js`.** Replace the file with the wiring of the pack: the step
+files of webship-js and the entry file of the pack, and the address of the
+site. The suite needs no account (see [Test users](#test-users)).
+
+```javascript
+module.exports = {
+  default: {
+    requireModule: ['tsx/cjs'],
+    require: [
+      'node_modules/webship-js/tests/step-definitions/**/*.js',
+      'node_modules/@webship-js/hubspot-cms-steps/tests/step-definitions/hubspot.steps.js',
+      'tests/step-definitions/**/*.js',
+    ],
+    paths: ['tests/features/**/*.feature'],
+    format: ['@cucumber/pretty-formatter', 'json:tests/reports/cucumber_report.json'],
+    worldParameters: {
+      launchUrl: process.env.LAUNCH_URL || 'https://hubspot-cms-steps.ddev.site',
+      // The waits webship-js adds around each page, scenario and step (milliseconds).
+      minWaitTime: { page: 3000, before_scenario: 0, after_scenario: 0, before_step: 0, after_step: 0 },
+    },
+  },
+};
+```
+
+With the site of `npx http-server`, run with `LAUNCH_URL=http://localhost:8090`.
+
+**4. A first feature**, `tests/features/first-run.feature`:
+
+```gherkin
+Feature: First run
+  Scenario: The home page is a website page with the tracking code and the menu
+    Given I am on "/index.html"
+    Then the page should be a website page
+    And the tracking code should be installed
+    And the menu should have a link labeled "Pricing"
+
+  Scenario: The cookie banner goes away once accepted
+    Given I am on "/index.html"
+    When I accept the cookie banner
+    Then the cookie banner should not be visible
+    And the cookie consent should be accepted
+```
+
+**5. Run it.**
+
+```bash
+npm test
+```
+
+A green first run prints every step, then the summary (the starter feature of
+`npx init-webship-js` and the two scenarios above, passed) and the HTML report
+it wrote:
+
+```
+FIRSTRUN
+```
+
+From there, copy the features of [`tests/features/`](tests/features/) (they
+also ship in the package, under
+`node_modules/@webship-js/hubspot-cms-steps/tests/features/`): together they use
+every step of the pack, against the pages of the demo site.
+
+### What the suite tests
+
+The features of this repository run every step of the pack against the demo
+site, and CI starts it with DDEV and runs them on every change: the page (the
+generator, site, landing, blog listing and blog post pages, the tracking code
+and its portal, the chat widget, a meetings embed, the language switcher and the
+alternates, switching the language, the canonical address, a page hidden from
+search engines), the cookie banner (accepting, declining, dismissing, the
+consent cookie, a consent given before the visit), forms (in the page, in an
+iframe and in the new editor's frame: their fields, required fields, ticking a
+checkbox, the errors of a field and of the form, the success message), menus
+and CTAs (labels, addresses, submenus, the active link, a CTA found by its text
+or its image's alternative text, its destination), the blog (the listing, a
+post, its tags and author, the pages of the listing, a tag page) and the site
+search (the field, results, no results, opening a result). Every assertion runs
+in its positive and in its negative form.
+
+Not tested: what HubSpot itself does. The demo's small script stands in for
+it, so the suite proves that the steps read HubSpot's markup, not that a given
+HubSpot release produces it: a form actually sent (a contact created), the CTA
+tracking redirect, the chat widget's own controls, smart content, memberships,
+HubDB pages and the analytics of the tracking code (see
+[What needs a HubSpot account](#what-needs-a-hubspot-account)).
+`npm run probe` and the read-only features of
+[`tests/features/real-sites/`](tests/features/real-sites/) check the selectors
+on public HubSpot sites, outside CI. A run leaves nothing: the site is static
+and the consent cookie lives in the browser.
+
 ## Installation
 
 ```bash
