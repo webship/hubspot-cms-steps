@@ -40,6 +40,19 @@ module.exports = {
 
 `hubspot.steps.js` is the entry point; it loads the other step files.
 
+## Test users
+
+None. The steps read what a HubSpot site renders to a visitor, and the suite
+tests the demo site of this repository (`demo-site/`), which has no sign-in:
+`cucumber.js` lists no accounts (its `worldParameters` has no `users`) and no
+scenario signs in. Pages behind a membership login are not covered (see
+[What needs a HubSpot account](#what-needs-a-hubspot-account)). The JSON of the
+accounts is empty:
+
+```json
+{}
+```
+
 ## How the steps are written
 
 - Every assertion takes `should` or `should not`. Every action takes `I`, `we` or no pronoun.
