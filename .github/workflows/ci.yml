@@ -43,6 +43,12 @@ jobs:
       - name: Check the JSDoc examples and feature steps against the step regexes
         run: npm run test:examples
 
+      - name: Check that a feature named on the command line runs alone
+        run: npm run test:paths
+
+      - name: Run cucumber-js dry-run (no undefined or ambiguous steps)
+        run: npx cucumber-js --dry-run
+
       - name: Run webship-js tests against the DDEV site
         run: |
           LAUNCH_URL="$(ddev describe -j | jq -r '.raw.primary_url')"
