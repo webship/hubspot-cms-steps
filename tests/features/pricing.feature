@@ -16,6 +16,7 @@ Feature: Pricing page
     Then the CTA "Get Started" should link to "/contact-us.html"
     And the CTA "Start Free Trial" should link to "/contact-us.html"
     And the CTA "Talk to Sales" should link to "/contact-us.html"
+    And the CTA "Download the guide" should not be visible
 
   Scenario: Clicking a pricing CTA goes to the contact page
     When I click the CTA "Start Free Trial"
