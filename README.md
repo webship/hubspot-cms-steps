@@ -16,7 +16,7 @@ steps were checked on public sites built on HubSpot CMS; the counts are in
 
 ## From nothing to a green run
 
-What the machine needs: git, Node.js 20 or later with npm, and
+What the machine needs: git, Node.js 24 or later with npm, and
 [DDEV](https://ddev.com/get-started/) for the demo site (or no container at all:
 `npx http-server` serves the same pages).
 
